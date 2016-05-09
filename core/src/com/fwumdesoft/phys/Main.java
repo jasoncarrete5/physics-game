@@ -11,7 +11,7 @@ public class Main extends Game {
 	public static Game game;
 	
 	@Override
-	public void create () {
+	public void create() {
 		game = this;
 		uiskin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 		assets = new AssetManager();
