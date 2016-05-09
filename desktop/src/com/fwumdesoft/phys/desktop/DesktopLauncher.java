@@ -7,6 +7,7 @@ import com.fwumdesoft.phys.Main;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.title = "Wavefront";
 		new LwjglApplication(new Main(), config);
 	}
 }
