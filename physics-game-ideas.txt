@@ -1,0 +1,9 @@
+Wavefront:
+	Gameplay:
+		Pulse Generator fires a wave pulse
+		Pulse affects air molecules to visually represent what is happening
+		Receiver needs to receive pulse at a certain amplitude
+		Use reflectors and refractors to direct the wave front
+		Use amplifiers to amplify the wave
+	Story:
+		
