@@ -3,12 +3,19 @@ package com.fwumdesoft.phys;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Main extends Game {
-	public static AssetManager assets;
+	/** Contains AssetDescriptor constants for easy access of assets. */
+	public static class Assets {
+		public static final AssetDescriptor<Texture> AIR = new AssetDescriptor<>("textures/air.png", Texture.class);
+		public static final AssetDescriptor<Texture> REFLECTOR = new AssetDescriptor<>("textures/reflector.png", Texture.class);
+	}
+	
+	public static AssetManager asset;
 	public static Skin uiskin;
 	public static Game game;
 	
@@ -17,9 +24,10 @@ public class Main extends Game {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		game = this;
 		uiskin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-		assets = new AssetManager();
-		assets.load("textures/air.png", Texture.class);
-		assets.finishLoading();
+		asset = new AssetManager();
+		asset.load(Assets.AIR);
+		asset.load(Assets.REFLECTOR);
+		asset.finishLoading();
 		
 		setScreen(new GameScreen());
 	}
@@ -28,6 +36,6 @@ public class Main extends Game {
 	public void dispose() {
 		super.dispose();
 		uiskin.dispose();
-		assets.dispose();
+		asset.dispose();
 	}
 }

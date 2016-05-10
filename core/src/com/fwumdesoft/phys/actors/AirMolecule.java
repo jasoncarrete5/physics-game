@@ -1,6 +1,5 @@
 package com.fwumdesoft.phys.actors;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
@@ -13,7 +12,7 @@ public class AirMolecule extends Actor implements Poolable {
 	private static final TextureRegion texture;
 	
 	static {
-		texture = new TextureRegion(Main.assets.get("textures/air.png", Texture.class));
+		texture = new TextureRegion(Main.asset.get(Main.Assets.AIR));
 	}
 	
 	private Polygon hitbox;
