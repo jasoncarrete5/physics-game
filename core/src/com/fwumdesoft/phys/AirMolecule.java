@@ -49,4 +49,12 @@ public class AirMolecule extends Actor implements Poolable {
 	public void reset() {
 		hitbox.dirty();
 	}
+	
+	@Override
+	public String toString() {
+		String result = super.toString();
+		result += ": {X: " + getX() + ", Y: " + getY() + ", Rotation: " + getRotation();
+		result += "}";
+		return result;
+	}
 }

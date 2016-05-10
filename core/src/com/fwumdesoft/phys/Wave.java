@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.utils.Align;
@@ -73,7 +72,7 @@ public class Wave extends Actor {
 	public String toString() {
 		String result = super.toString();
 		result += ": {X: " + getX() + ", Y: " + getY();
-		result += " Speed: " + velocity.len() + " Direction: " + getRotation();
+		result += " Velocity: " + velocity + " Direction: " + getRotation();
 		result += "}";
 		return result;
 	}
