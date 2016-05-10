@@ -18,7 +18,10 @@ public class GameScreen extends ScreenAdapter {
 		stage = new Stage(new FillViewport(200f, 200f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
 		Gdx.input.setInputProcessor(stage);
 		
-		generateAir(0.01f);
+		generateAir(0.25f);
+		Wave wave = new Wave(5, 15, 25);
+		stage.addActor(wave);
+		wave.propagate(0, 0, 20);
 	}
 	
 	/**
