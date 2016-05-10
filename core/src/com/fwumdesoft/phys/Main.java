@@ -3,6 +3,7 @@ package com.fwumdesoft.phys;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Main extends Game {
@@ -15,6 +16,8 @@ public class Main extends Game {
 		game = this;
 		uiskin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 		assets = new AssetManager();
+		assets.load("textures/air.png", Texture.class);
+		assets.finishLoading();
 		
 		setScreen(new GameScreen());
 	}
