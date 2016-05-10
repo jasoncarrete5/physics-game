@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 public class AirMolecule extends Actor implements Poolable {
@@ -14,9 +13,11 @@ public class AirMolecule extends Actor implements Poolable {
 		texture = new TextureRegion(Main.assets.get("textures/air.png", Texture.class));
 	}
 	
-	public AirMolecule(float x, float y) {
-		setPosition(x, y);
-		setOrigin(Align.center);
+	/**
+	 * No-arg constructor required for object pooling.
+	 */
+	public AirMolecule() {
+		setSize(1.5f, 1.5f);
 	}
 	
 	@Override
