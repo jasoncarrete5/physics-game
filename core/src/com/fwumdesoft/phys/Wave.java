@@ -48,16 +48,6 @@ public class Wave extends Actor {
 	protected void positionChanged() {
 		hitbox.setPosition(getX(), getY());
 		
-		Stage stage = getStage();
-		if(getX() + getOriginX() < 0 || getX() + getOriginX() > stage.getWidth()) {
-			velocity.x = -velocity.x;
-			setRotation(velocity.angle());
-		}
-		if(getY() + getOriginY() < 0 || getY() + getOriginY() > stage.getHeight()) {
-			velocity.y = -velocity.y;
-			setRotation(velocity.angle());
-		}
-		
 		//tell air particles in hitbox to move
 		for(Actor actor : getStage().getActors()) {
 			if(actor instanceof AirMolecule) {
