@@ -21,7 +21,7 @@ public class AirMolecule extends Actor implements Poolable {
 	 * No-arg constructor required for object pooling.
 	 */
 	public AirMolecule() {
-		setSize(1.5f, 1.5f);
+		setSize(1f, 1f);
 		setOrigin(Align.center);
 		hitbox = new Polygon(new float[] {0, 0, getWidth(), 0, getWidth(), getHeight(), 0, getHeight()});
 	}
@@ -39,6 +39,10 @@ public class AirMolecule extends Actor implements Poolable {
 	@Override
 	protected void rotationChanged() {
 		hitbox.setRotation(getRotation());
+	}
+	
+	public Polygon getHitbox() {
+		return hitbox;
 	}
 	
 	@Override
