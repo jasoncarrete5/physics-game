@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.fwumdesoft.phys.actors.AirMolecule;
+import com.fwumdesoft.phys.actors.Wave;
 
 public class GameScreen extends ScreenAdapter {
 	private Stage stage;
@@ -19,7 +21,7 @@ public class GameScreen extends ScreenAdapter {
 		Gdx.input.setInputProcessor(stage);
 		
 		generateAir(0.25f);
-		Wave wave = new Wave(5, 15, 25);
+		Wave wave = new Wave();
 		stage.addActor(wave);
 		wave.propagate(0, 0, 20);
 	}

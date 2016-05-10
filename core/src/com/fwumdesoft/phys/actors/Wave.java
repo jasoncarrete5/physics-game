@@ -1,4 +1,4 @@
-package com.fwumdesoft.phys;
+package com.fwumdesoft.phys.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
@@ -14,6 +14,10 @@ import com.badlogic.gdx.utils.Align;
 public class Wave extends Actor {
 	private Polygon hitbox;
 	private Vector2 velocity;
+	
+	public Wave() {
+		this(5, 20, 30);
+	}
 	
 	public Wave(float width, float height, float speed) {
 		setSize(width, height);

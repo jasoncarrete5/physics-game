@@ -1,4 +1,4 @@
-package com.fwumdesoft.phys;
+package com.fwumdesoft.phys.actors;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool.Poolable;
+import com.fwumdesoft.phys.Main;
 
 public class AirMolecule extends Actor implements Poolable {
 	private static final TextureRegion texture;
