@@ -32,8 +32,6 @@ public class GameScreen extends ScreenAdapter {
 		int totalAir = MathUtils.ceil(area * density);
 		int cellLength = MathUtils.ceil((float)Math.sqrt(1f / density));
 		
-		Gdx.app.debug("GameScreen", area + ", " + totalAir + ", " + cellLength);
-		
 		for(int minY = 0; minY < worldHeight; minY += cellLength) {
 			for(int minX = 0; minX < worldWidth; minX += cellLength) {
 				float randX = MathUtils.random(minX, minX + cellLength);
