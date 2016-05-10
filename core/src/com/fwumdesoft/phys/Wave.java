@@ -2,10 +2,14 @@ package com.fwumdesoft.phys;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.utils.Align;
 
 public class Wave extends Actor {
@@ -15,7 +19,7 @@ public class Wave extends Actor {
 	public Wave(float width, float height, float speed) {
 		setSize(width, height);
 		setOrigin(Align.center);
-		hitbox = new Polygon();
+		hitbox = new Polygon(new float[] {0, 0, getWidth(), 0, getWidth(), getHeight(), 0, getHeight()});
 		velocity = Vector2.X.cpy().scl(speed);
 	}
 	
@@ -33,14 +37,40 @@ public class Wave extends Actor {
 		
 		setPosition(startX, startY);
 		setRotation(direction);
-		addAction(Actions.repeat(20, Actions.moveBy(velocity.x, velocity.y, 1f, Interpolation.linear)));
+		final MoveByAction moveAction = Actions.moveBy(velocity.x, velocity.y, 1f, Interpolation.linear);
+		Action updateSpeed = Actions.run(() -> {
+			moveAction.setAmount(velocity.x, velocity.y);
+		});
+		addAction(Actions.forever(Actions.parallel(moveAction, updateSpeed)));
 	}
 	
 	@Override
 	protected void positionChanged() {
 		hitbox.setPosition(getX(), getY());
 		
-		//TODO tell all air molecules to move if they are within the hitbox
+		Stage stage = getStage();
+		if(getX() + getOriginX() < 0 || getX() + getOriginX() > stage.getWidth()) {
+			velocity.x = -velocity.x;
+			setRotation(velocity.angle());
+		}
+		if(getY() + getOriginY() < 0 || getY() + getOriginY() > stage.getHeight()) {
+			velocity.y = -velocity.y;
+			setRotation(velocity.angle());
+		}
+		
+		//tell air particles in hitbox to move
+		for(Actor actor : getStage().getActors()) {
+			if(actor instanceof AirMolecule) {
+				AirMolecule air = (AirMolecule)actor;
+				if(Intersector.overlapConvexPolygons(hitbox, air.getHitbox())) {
+					if(air.hasActions())
+						continue;
+					Action moveForward = Actions.moveBy(velocity.x, velocity.y, 1f, Interpolation.linear);
+					Action moveBackward = Actions.moveBy(-velocity.x, -velocity.y, 1f, Interpolation.sine);
+					air.addAction(Actions.sequence(moveForward, moveBackward));
+				}
+			}
+		}
 	}
 	
 	@Override
