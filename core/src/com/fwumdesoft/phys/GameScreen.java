@@ -3,7 +3,11 @@ package com.fwumdesoft.phys;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
 public class GameScreen extends ScreenAdapter {
@@ -13,6 +17,32 @@ public class GameScreen extends ScreenAdapter {
 	public void show() {
 		stage = new Stage(new FillViewport(200f, 200f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
 		Gdx.input.setInputProcessor(stage);
+		
+		generateAir(0.01f);
+	}
+	
+	/**
+	 * Generates AirMolecule objects on the screen with a specified density and adds them
+	 * to the stage.
+	 * @param density Density of AirMolecules in molecules/unit^2
+	 */
+	private void generateAir(float density) {
+		float worldWidth = stage.getWidth(), worldHeight = stage.getHeight();
+		float area = worldWidth * worldHeight;
+		int totalAir = MathUtils.ceil(area * density);
+		int cellLength = MathUtils.ceil((float)Math.sqrt(1f / density));
+		
+		Gdx.app.debug("GameScreen", area + ", " + totalAir + ", " + cellLength);
+		
+		for(int minY = 0; minY < worldHeight; minY += cellLength) {
+			for(int minX = 0; minX < worldWidth; minX += cellLength) {
+				float randX = MathUtils.random(minX, minX + cellLength);
+				float randY = MathUtils.random(minY, minY + cellLength);
+				Actor airMolecule = Pools.get(AirMolecule.class, totalAir).obtain();
+				airMolecule.setPosition(randX, randY, Align.center);
+				stage.addActor(airMolecule);
+			}
+		}
 	}
 	
 	@Override
