@@ -68,11 +68,19 @@ public class Wave extends Actor {
 		velocity.setAngle(getRotation());
 	}
 	
+	public void setSpeed(float speed) {
+		velocity.nor().scl(speed);
+	}
+	
+	public float getSpeed() {
+		return velocity.len();
+	}
+	
 	@Override
 	public String toString() {
 		String result = super.toString();
 		result += ": {X: " + getX() + ", Y: " + getY();
-		result += " Velocity: " + velocity + " Direction: " + getRotation();
+		result += ", Velocity: " + velocity + " Direction: " + getRotation();
 		result += "}";
 		return result;
 	}
