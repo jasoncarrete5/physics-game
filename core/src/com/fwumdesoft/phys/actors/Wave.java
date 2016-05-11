@@ -3,7 +3,6 @@ package com.fwumdesoft.phys.actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -11,8 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.utils.Align;
 
-public class Wave extends Actor {
-	private Polygon hitbox;
+public class Wave extends HitboxActor {
 	private Vector2 velocity;
 	
 	public Wave() {
@@ -22,7 +20,6 @@ public class Wave extends Actor {
 	public Wave(float width, float height, float speed) {
 		setSize(width, height);
 		setOrigin(Align.center);
-		hitbox = new Polygon(new float[] {0, 0, getWidth(), 0, getWidth(), getHeight(), 0, getHeight()});
 		velocity = Vector2.X.cpy().scl(speed);
 	}
 	
@@ -49,13 +46,13 @@ public class Wave extends Actor {
 	
 	@Override
 	protected void positionChanged() {
-		hitbox.setPosition(getX(), getY());
+		super.positionChanged();
 		
 		//tell air particles in hitbox to move
 		for(Actor actor : getStage().getActors()) {
 			if(actor instanceof AirMolecule) {
 				AirMolecule air = (AirMolecule)actor;
-				if(Intersector.overlapConvexPolygons(hitbox, air.getHitbox())) {
+				if(Intersector.overlapConvexPolygons(hitbox(), air.hitbox())) {
 					if(air.hasActions())
 						continue;
 					Action moveForward = Actions.moveBy(velocity.x, velocity.y, 1f, Interpolation.linear);
@@ -68,7 +65,7 @@ public class Wave extends Actor {
 	
 	@Override
 	protected void rotationChanged() {
-		hitbox.setRotation(getRotation());
+		super.rotationChanged();
 		velocity.setAngle(getRotation());
 	}
 	
