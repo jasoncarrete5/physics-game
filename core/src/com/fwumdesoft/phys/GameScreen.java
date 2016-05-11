@@ -27,8 +27,12 @@ public class GameScreen extends ScreenAdapter {
 		wave.propagate(0, 0, 20);
 		
 		Reflector refl = new Reflector(TransformType.fixed);
-		refl.setPosition(100, 30, Align.center);
+		refl.setPosition(100, 35, Align.center);
 		stage.addActor(refl);
+		
+		Reflector refl2 = new Reflector(TransformType.fixed);
+		refl2.setPosition(65, 45);
+		stage.addActor(refl2);
 	}
 	
 	/**

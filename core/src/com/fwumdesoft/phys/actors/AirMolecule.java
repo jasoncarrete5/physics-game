@@ -2,6 +2,7 @@ package com.fwumdesoft.phys.actors;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -45,7 +46,7 @@ public class AirMolecule extends HitboxActor implements Poolable {
 				//air molecule should reset position when they hit a reflector so the Wave can cause them to displace
 				if(Intersector.overlapConvexPolygons(hitbox(), refl.hitbox())) { 
 					clearActions();
-					MoveToAction moveAction = Actions.moveTo(markedPos.x, markedPos.y);
+					MoveToAction moveAction = Actions.moveTo(markedPos.x, markedPos.y, 1f, Interpolation.sineOut);
 					addAction(moveAction);
 				}
 			}

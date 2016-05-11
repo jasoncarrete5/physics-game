@@ -14,7 +14,7 @@ public class Wave extends HitboxActor {
 	private Vector2 velocity;
 	
 	public Wave() {
-		this(5, 20, 30);
+		this(3, 6, 30);
 	}
 	
 	public Wave(float width, float height, float speed) {
@@ -48,16 +48,26 @@ public class Wave extends HitboxActor {
 	protected void positionChanged() {
 		super.positionChanged();
 		
-		//tell air particles in hitbox to move
 		for(Actor actor : getStage().getActors()) {
-			if(actor instanceof AirMolecule) {
+			if(actor instanceof AirMolecule) { //tell air particles in hitbox to move
 				AirMolecule air = (AirMolecule)actor;
 				if(Intersector.overlapConvexPolygons(hitbox(), air.hitbox())) {
-					if(air.hasActions())
-						continue;
+					if(air.hasActions()) continue; //TODO Implement a way for waves to interfere
 					Action moveForward = Actions.moveBy(velocity.x, velocity.y, 1f, Interpolation.linear);
 					Action moveBackward = Actions.moveBy(-velocity.x, -velocity.y, 1f, Interpolation.sine);
 					air.addAction(Actions.sequence(moveForward, moveBackward));
+				}
+			} else if(actor instanceof Reflector) { //reflect off reflector with proper angle of reflection
+				Reflector refl = (Reflector)actor;
+				if(refl.hitbox().contains(getX(Align.center), getY(Align.center))) {
+					Vector2 normal = refl.getNormal();
+					float incidence = velocity.angle(normal);
+					clearActions();
+					Action moveBack = Actions.moveBy(-velocity.x * 0.1f, -velocity.y * 0.1f);
+					Action propagate = Actions.run(() -> {
+						propagate(getX(), getY(), getRotation() + 180 + 2 * incidence);
+					});
+					addAction(Actions.sequence(moveBack, propagate));
 				}
 			}
 		}

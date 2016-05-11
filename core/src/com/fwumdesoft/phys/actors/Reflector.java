@@ -2,9 +2,15 @@ package com.fwumdesoft.phys.actors;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.fwumdesoft.phys.Main;
 
+/**
+ * Can reflect waves. All reflectors should have more height than width when
+ * {@link #getRotation()} = 0. Reflectors can only reflect in the direction
+ * they are facing.
+ */
 public class Reflector extends HitboxActor {
 	private static final TextureRegion texture;
 	
@@ -20,7 +26,7 @@ public class Reflector extends HitboxActor {
 	 * to determine what kind of modifications the user can make to this Reflector.
 	 */
 	public Reflector(byte fixedType) {
-		setSize(5, 20);
+		setSize(2, 20);
 		setOrigin(Align.center);
 		fixed = fixedType;
 	}
@@ -32,5 +38,13 @@ public class Reflector extends HitboxActor {
 	
 	public byte getFixedMask() {
 		return fixed;
+	}
+	
+	/**
+	 * Calculates this Reflectors normal based on its current rotation.
+	 * @return The line perpendicular
+	 */
+	public Vector2 getNormal() {
+		return Vector2.X.cpy().rotate(getRotation());
 	}
 }
