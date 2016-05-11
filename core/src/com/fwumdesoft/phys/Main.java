@@ -13,6 +13,7 @@ public class Main extends Game {
 	public static class Assets {
 		public static final AssetDescriptor<Texture> AIR = new AssetDescriptor<>("textures/air.png", Texture.class);
 		public static final AssetDescriptor<Texture> REFLECTOR = new AssetDescriptor<>("textures/reflector.png", Texture.class);
+		public static final AssetDescriptor<Texture> REFRACTOR = new AssetDescriptor<>("textures/refractor.png", Texture.class);
 	}
 	
 	public static AssetManager asset;
