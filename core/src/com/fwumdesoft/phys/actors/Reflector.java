@@ -8,8 +8,7 @@ import com.fwumdesoft.phys.Main;
 
 /**
  * Can reflect waves. All reflectors should have more height than width when
- * {@link #getRotation()} = 0. Reflectors can only reflect in the direction
- * they are facing.
+ * {@link #getRotation()} = 0.
  */
 public class Reflector extends HitboxActor {
 	private static final TextureRegion texture;

@@ -37,7 +37,7 @@ public class Wave extends HitboxActor {
 		
 		setPosition(startX, startY);
 		setRotation(direction);
-		final MoveByAction moveAction = Actions.moveBy(velocity.x, velocity.y, 0.5f, Interpolation.linear);
+		final MoveByAction moveAction = Actions.moveBy(velocity.x, velocity.y, 1f, Interpolation.linear);
 		Action updateSpeed = Actions.run(() -> {
 			moveAction.setAmount(velocity.x, velocity.y);
 		});
@@ -53,8 +53,8 @@ public class Wave extends HitboxActor {
 				AirMolecule air = (AirMolecule)actor;
 				if(Intersector.overlapConvexPolygons(hitbox(), air.hitbox())) {
 					if(air.hasActions()) continue; //TODO Implement a way for waves to interfere
-					Action moveForward = Actions.moveBy(velocity.x, velocity.y, 0.5f, Interpolation.linear);
-					Action moveBackward = Actions.moveBy(-velocity.x, -velocity.y, 0.5f, Interpolation.sine);
+					Action moveForward = Actions.moveBy(velocity.x, velocity.y, 1f, Interpolation.linear);
+					Action moveBackward = Actions.moveBy(-velocity.x, -velocity.y, 1f, Interpolation.sine);
 					air.addAction(Actions.sequence(moveForward, moveBackward));
 				}
 			} else if(actor instanceof Reflector) { //reflect off reflector with proper angle of reflection
