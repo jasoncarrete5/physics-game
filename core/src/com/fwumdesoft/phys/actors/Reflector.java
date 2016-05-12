@@ -25,7 +25,7 @@ public class Reflector extends HitboxActor {
 	 * to determine what kind of modifications the user can make to this Reflector.
 	 */
 	public Reflector(byte fixedType) {
-		setSize(2, 20);
+		setSize(3, 20);
 		setOrigin(Align.center);
 		fixed = fixedType;
 	}

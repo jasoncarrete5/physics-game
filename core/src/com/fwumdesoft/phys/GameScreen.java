@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.fwumdesoft.phys.actors.AirMolecule;
 import com.fwumdesoft.phys.actors.Reflector;
+import com.fwumdesoft.phys.actors.Refractor;
 import com.fwumdesoft.phys.actors.Wave;
 
 public class GameScreen extends ScreenAdapter {
@@ -26,9 +27,10 @@ public class GameScreen extends ScreenAdapter {
 		stage.addActor(wave);
 		wave.propagate(0, 0, 20);
 		
-		Reflector refl = new Reflector(TransformType.fixed);
-		refl.setPosition(150, 55, Align.center);
-		stage.addActor(refl);
+		Refractor refr = new Refractor(0.5f, TransformType.fixed);
+		refr.setPosition(150, 55, Align.center);
+		refr.setRotation(180);
+		stage.addActor(refr);
 		
 		Reflector refl2 = new Reflector(TransformType.fixed);
 		refl2.setPosition(100, 75, Align.center);

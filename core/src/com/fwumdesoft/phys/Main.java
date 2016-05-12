@@ -28,6 +28,7 @@ public class Main extends Game {
 		asset = new AssetManager();
 		asset.load(Assets.AIR);
 		asset.load(Assets.REFLECTOR);
+		asset.load(Assets.REFRACTOR);
 		asset.finishLoading();
 		
 		setScreen(new GameScreen());
