@@ -19,6 +19,8 @@ public class Reflector extends HitboxActor {
 	
 	private byte fixed;
 	
+	public Reflector() {}
+	
 	/**
 	 * Instantiates a new Reflector with the specified fixation.
 	 * @param fixedType A bit mask value setting the fixation of the Reflector. Used

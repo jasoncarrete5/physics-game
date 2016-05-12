@@ -31,7 +31,7 @@ public class Main extends Game {
 		asset.load(Assets.REFRACTOR);
 		asset.finishLoading();
 		
-		setScreen(new GameScreen());
+		setScreen(new MainMenuScreen());
 	}
 	
 	@Override

@@ -7,6 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.fwumdesoft.phys.Main;
 
+/**
+ * This Actor can refract waves.
+ */
 public class Refractor extends HitboxActor {
 	private static final TextureRegion texture;
 	
@@ -16,6 +19,8 @@ public class Refractor extends HitboxActor {
 	
 	private float refractionIndex;
 	private byte fixed;
+	
+	public Refractor() {}
 	
 	public Refractor(float refractionIndex, byte fixedMask) {
 		setSize(3, 20);
@@ -27,6 +32,10 @@ public class Refractor extends HitboxActor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(texture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+	}
+	
+	public byte getFixedMask() {
+		return fixed;
 	}
 	
 	/**
