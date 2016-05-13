@@ -39,6 +39,7 @@ public class MainMenuScreen extends ScreenAdapter {
 		});
 		
 		ui.add(btnEditor);
+		ui.row().padTop(3);
 		ui.add(btnGame);
 	}
 	
