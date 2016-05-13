@@ -12,6 +12,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.fwumdesoft.phys.Main;
 
+/**
+ * Represents an air molecule that can be moved by a Wave.
+ */
 public class AirMolecule extends HitboxActor implements Poolable {
 	private static final TextureRegion texture;
 	
@@ -21,9 +24,6 @@ public class AirMolecule extends HitboxActor implements Poolable {
 	
 	private Vector2 markedPos;
 	
-	/**
-	 * No-arg constructor required for object pooling.
-	 */
 	public AirMolecule() {
 		setSize(1.5f, 1.5f);
 		setOrigin(Align.center);

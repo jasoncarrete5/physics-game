@@ -1,4 +1,4 @@
-package com.fwumdesoft.phys.level;
+package com.fwumdesoft.phys;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
@@ -11,12 +11,24 @@ import com.fwumdesoft.phys.actors.Refractor;
 import com.fwumdesoft.phys.actors.Transmitter;
 import com.fwumdesoft.phys.actors.Wall;
 
+/**
+ * Contains all actors in a level and contains all of their meta data to
+ * describe how they can be used such as whether they are fixed or not.
+ */
 public class Level {
 	private Array<Reflector> reflectors;
 	private Array<Refractor> refractors;
 	private Array<Wall> walls;
 	private Array<Receiver> receivers;
-	private Array<Transmitter> trasnmitters;
+	private Array<Transmitter> transmitters;
+	
+	public Level() {
+		reflectors = new Array<>();
+		refractors = new Array<>();
+		walls = new Array<>();
+		receivers = new Array<>();
+		transmitters = new Array<>();
+	}
 	
 	/**
 	 * Adds the specified Actor to this level.
@@ -29,11 +41,33 @@ public class Level {
 			refractors.add((Refractor)a);
 		} else if(a instanceof Wall) {
 			walls.add((Wall)a);
+		} else if(a instanceof Receiver) {
+			receivers.add((Receiver)a);
+		} else if(a instanceof Transmitter) {
+			transmitters.add((Transmitter)a);
+		} else {
+			throw new IllegalArgumentException("Invalid Actor");
 		}
+	}
+	
+	public Array<Reflector> getReflectors() {
+		return reflectors;
 	}
 	
 	public Array<Refractor> getRefractors() {
 		return refractors;
+	}
+	
+	public Array<Wall> getWalls() {
+		return walls;
+	}
+	
+	public Array<Receiver> getReceivers() {
+		return receivers;
+	}
+	
+	public Array<Transmitter> getTransmitters() {
+		return transmitters;
 	}
 	
 	/**
