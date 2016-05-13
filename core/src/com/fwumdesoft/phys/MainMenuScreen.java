@@ -16,7 +16,7 @@ public class MainMenuScreen extends ScreenAdapter {
 	
 	@Override
 	public void show() {
-		stage = new Stage(new FillViewport(400f, 400f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
+		stage = new Stage(new FillViewport(1000f, 1000f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
 		Gdx.input.setInputProcessor(stage);
 		Table ui = new Table();
 		ui.setFillParent(true);
