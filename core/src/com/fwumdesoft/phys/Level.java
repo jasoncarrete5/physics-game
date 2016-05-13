@@ -2,6 +2,7 @@ package com.fwumdesoft.phys;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -16,6 +17,7 @@ import com.fwumdesoft.phys.actors.Wall;
  * describe how they can be used such as whether they are fixed or not.
  */
 public class Level {
+	private String name;
 	private Array<Reflector> reflectors;
 	private Array<Refractor> refractors;
 	private Array<Wall> walls;
@@ -28,6 +30,14 @@ public class Level {
 		walls = new Array<>();
 		receivers = new Array<>();
 		transmitters = new Array<>();
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	/**
@@ -77,16 +87,17 @@ public class Level {
 	 */
 	public static Level loadFromFile(String lvlName) {
 		Json json = new Json();
-		return json.fromJson(Level.class, Gdx.files.internal("levels/" + lvlName));
+		return json.fromJson(Level.class, Gdx.files.local("physics-game/levels/" + lvlName));
 	}
 	
 	/**
 	 * Writes this level to 'physics-game/levels/' using a {@link FileType#External}
-	 * FileHandle with the specified name.
-	 * @param name The name of the file.
+	 * FileHandle with the set name.
 	 */
-	public void writeLevel(String name) {
+	public void writeLevel() {
 		Json json = new Json();
-		json.toJson(this, Gdx.files.external("physics-game/levels/" + name));
+		String jsonText = json.prettyPrint(this);
+		FileHandle lvlFile = Gdx.files.external("physics-game/levels/" + name);
+		lvlFile.writeString(jsonText, false);
 	}
 }
