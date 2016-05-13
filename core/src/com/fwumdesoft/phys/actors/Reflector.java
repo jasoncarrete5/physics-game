@@ -20,7 +20,9 @@ public class Reflector extends HitboxActor implements TransformType {
 	
 	private byte fixed;
 	
-	public Reflector() {}
+	public Reflector() {
+		this((byte)0);
+	}
 	
 	/**
 	 * Instantiates a new Reflector with the specified fixation.
