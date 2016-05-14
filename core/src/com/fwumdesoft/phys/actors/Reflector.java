@@ -8,20 +8,17 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Json.Serializable;
 import com.badlogic.gdx.utils.JsonValue;
 import com.fwumdesoft.phys.Main;
-import com.fwumdesoft.phys.TransformType;
 
 /**
  * Can reflect waves. All reflectors should have more height than width when
  * {@link #getRotation()} = 0.
  */
-public class Reflector extends HitboxActor implements TransformType, Serializable {
+public class Reflector extends HitboxActor implements Serializable {
 	private static final TextureRegion texture;
 	
 	static {
 		texture = new TextureRegion(Main.asset.get(Main.Assets.REFLECTOR));
 	}
-	
-	private byte fixed;
 	
 	public Reflector() {
 		this((byte)0);
@@ -35,7 +32,7 @@ public class Reflector extends HitboxActor implements TransformType, Serializabl
 	public Reflector(byte fixedType) {
 		setSize(3, 20);
 		setOrigin(Align.center);
-		fixed = fixedType;
+		setFixed(fixedType);
 	}
 	
 	@Override
@@ -52,16 +49,6 @@ public class Reflector extends HitboxActor implements TransformType, Serializabl
 	}
 	
 	@Override
-	public byte getFixed() {
-		return fixed;
-	}
-	
-	@Override
-	public void setFixed(byte fixed) {
-		this.fixed = fixed;
-	}
-	
-	@Override
 	public void write(Json json) {
 		json.writeValue("x", getX());
 		json.writeValue("y", getY());
@@ -72,7 +59,7 @@ public class Reflector extends HitboxActor implements TransformType, Serializabl
 		json.writeValue("height", getHeight());
 		json.writeValue("scaleX", getScaleX());
 		json.writeValue("scaleY", getScaleY());
-		json.writeValue("fixed", fixed);
+		json.writeValue("fixed", getFixed());
 	}
 	
 	@Override
@@ -81,6 +68,6 @@ public class Reflector extends HitboxActor implements TransformType, Serializabl
 		setOrigin(jsonData.getFloat("originX"), jsonData.getFloat("originY"));
 		setRotation(jsonData.getFloat("rotation"));
 		setScale(jsonData.getFloat("scaleX"), jsonData.getFloat("scaleY"));
-		fixed = jsonData.getByte("fixed");
+		setFixed(jsonData.getByte("fixed"));
 	}
 }

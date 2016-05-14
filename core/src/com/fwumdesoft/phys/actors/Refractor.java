@@ -6,19 +6,17 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.fwumdesoft.phys.Main;
-import com.fwumdesoft.phys.TransformType;
 
 /**
  * This Actor can refract waves.
  */
-public class Refractor extends HitboxActor implements TransformType {
+public class Refractor extends HitboxActor {
 	private static final TextureRegion texture;
 	
 	static {
 		texture = new TextureRegion(Main.asset.get(Main.Assets.REFRACTOR));
 	}
 	
-	private byte fixed;
 	private float refractionIndex;
 	
 	public Refractor() {}
@@ -26,8 +24,8 @@ public class Refractor extends HitboxActor implements TransformType {
 	public Refractor(float refractionIndex, byte fixedMask) {
 		setSize(3, 20);
 		setOrigin(Align.center);
+		setFixed(fixedMask);
 		this.refractionIndex = refractionIndex;
-		fixed = fixedMask;
 	}
 	
 	@Override
@@ -49,15 +47,5 @@ public class Refractor extends HitboxActor implements TransformType {
 	
 	public Vector2 getNormal() {
 		return Vector2.X.cpy().rotate(getRotation());
-	}
-
-	@Override
-	public byte getFixed() {
-		return fixed;
-	}
-
-	@Override
-	public void setFixed(byte fixed) {
-		this.fixed = fixed;
 	}
 }

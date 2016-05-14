@@ -2,6 +2,7 @@ package com.fwumdesoft.phys.actors;
 
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.fwumdesoft.phys.TransformType;
 
 /**
  * An Actor object that has a rectangular hitbox {@link Polygon} that will match
@@ -9,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class HitboxActor extends Actor {
 	private Polygon hitbox;
+	private byte fixed;
 	
 	public HitboxActor() {
 		hitbox = new Polygon(new float[8]);
@@ -131,5 +133,16 @@ public class HitboxActor extends Actor {
 	 */
 	public Polygon hitbox() {
 		return hitbox;
+	}
+
+	public byte getFixed() {
+		return fixed;
+	}
+	
+	/**
+	 * @param fixed A constant from {@link TransformType}.
+	 */
+	public void setFixed(byte fixed) {
+		this.fixed = fixed;
 	}
 }
