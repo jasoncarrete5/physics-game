@@ -1,11 +1,12 @@
 package com.fwumdesoft.phys;
 
-import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.fwumdesoft.phys.actors.HitboxActor;
 import com.fwumdesoft.phys.actors.Receiver;
 import com.fwumdesoft.phys.actors.Reflector;
 import com.fwumdesoft.phys.actors.Refractor;
@@ -17,6 +18,7 @@ import com.fwumdesoft.phys.actors.Wall;
  * describe how they can be used such as whether they are fixed or not.
  */
 public class Level {
+	/** The name of the level file. */
 	private String name;
 	private Array<Reflector> reflectors;
 	private Array<Refractor> refractors;
@@ -38,6 +40,57 @@ public class Level {
 	
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * Add all actors in this level to the stage.
+	 * @param stage Stage to add the actors to.
+	 * @param isEditor {@code true} if the stage is the editor stage, otherwise {@code false}.
+	 */
+	public void setupStage(Stage stage, boolean isEditor) {
+		if(isEditor) {
+			for(HitboxActor actor : getAllActors()) {
+				stage.addActor(actor);
+			}
+		} else {
+			//TODO only add actors with fixed positions to the stage
+		}
+	}
+	
+	/**
+	 * @return An Array of all actors in this level that have fixed positions.
+	 */
+	public Array<HitboxActor> getFixedPositionActors() {
+		Array<HitboxActor> fixedActors = new Array<>();
+		for(HitboxActor actor : getAllActors()) {
+			if((actor.getFixed() & TransformType.positionFixed) != 0) {
+				fixedActors.add(actor);
+			}
+		}
+		return fixedActors;
+	}
+	
+	/**
+	 * @return An Array of all actors in this level.
+	 */
+	public Array<HitboxActor> getAllActors() {
+		Array<HitboxActor> actors = new Array<>();
+		for(HitboxActor actor : reflectors) {
+			actors.add(actor);
+		}
+		for(HitboxActor actor : refractors) {
+			actors.add(actor);
+		}
+		for(HitboxActor actor : walls) {
+			actors.add(actor);
+		}
+		for(HitboxActor actor : receivers) {
+			actors.add(actor);
+		}
+		for(HitboxActor actor : transmitters) {
+			actors.add(actor);
+		}
+		return actors;
 	}
 	
 	/**
@@ -87,17 +140,17 @@ public class Level {
 	 */
 	public static Level loadFromFile(String lvlName) {
 		Json json = new Json();
-		return json.fromJson(Level.class, Gdx.files.local("physics-game/levels/" + lvlName));
+		return json.fromJson(Level.class, Gdx.files.local("levels/" + lvlName));
 	}
 	
 	/**
-	 * Writes this level to 'physics-game/levels/' using a {@link FileType#External}
-	 * FileHandle with the set name.
+	 * Saves this level to 'levels/{@link #name}'
 	 */
 	public void writeLevel() {
 		Json json = new Json();
 		String jsonText = json.prettyPrint(this);
-		FileHandle lvlFile = Gdx.files.external("physics-game/levels/" + name);
+		FileHandle lvlFile = Gdx.files.local("levels/" + name);
+		lvlFile.delete();
 		lvlFile.writeString(jsonText, false);
 	}
 }
