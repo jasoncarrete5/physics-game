@@ -11,7 +11,8 @@ import com.fwumdesoft.phys.Main;
 
 /**
  * Can reflect waves. All reflectors should have more height than width when
- * {@link #getRotation()} = 0.
+ * {@link #getRotation()} = 0. If the Wave hits this reflector more than 10 times
+ * it is considered a failed run and the level should reset.
  */
 public class Reflector extends HitboxActor implements Serializable {
 	private static final TextureRegion texture;

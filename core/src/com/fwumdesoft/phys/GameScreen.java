@@ -21,15 +21,16 @@ public class GameScreen extends ScreenAdapter {
 		stage = new Stage(new FillViewport(1000f, 1000f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
 		Gdx.input.setInputProcessor(stage);
 		
-		generateAir(0.1f);
-		Wave wave = new Wave(10, 30, 70);
+		generateAir(0.03f);
+		float width = 10, height = 15, speed = 100;
+		Wave wave = new Wave(width, height, speed);
 		stage.addActor(wave);
 		wave.propagate(0, 0, 20);
 		
 		Vector2 v = Vector2.X.cpy().rotate(wave.getRotation());
 		Reflector refl = new Reflector();
-		refl.setPosition(v.x * 400, v.y * 400, Align.center);
-		refl.setSize(7, 50);
+		refl.setPosition(v.x * 500, v.y * 500, Align.center);
+		refl.setSize(2, 50);
 		refl.setRotation(10);
 		stage.addActor(refl);
 	}

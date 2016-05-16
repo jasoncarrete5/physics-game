@@ -25,7 +25,7 @@ public class AirMolecule extends HitboxActor implements Poolable {
 	private Vector2 markedPos;
 	
 	public AirMolecule() {
-		setSize(1.5f, 1.5f);
+		setSize(3f, 3f);
 		setOrigin(Align.center);
 	}
 	
