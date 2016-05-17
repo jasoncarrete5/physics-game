@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.fwumdesoft.phys.actors.AirMolecule;
-import com.fwumdesoft.phys.actors.Reflector;
+import com.fwumdesoft.phys.actors.Wall;
 import com.fwumdesoft.phys.actors.Wave;
 
 public class GameScreen extends ScreenAdapter {
@@ -30,12 +30,10 @@ public class GameScreen extends ScreenAdapter {
 		wave.propagate(0, 0, 20);
 		wave.debug();
 		
-		Vector2 v = Vector2.X.cpy().rotate(wave.getRotation());
-		Reflector refl = new Reflector();
-		refl.setPosition(v.x * 500, v.y * 500, Align.center);
-		refl.setSize(5, 50);
-		refl.setRotation(10);
-		stage.addActor(refl);
+		Vector2 waveDir = Vector2.X.cpy().rotate(wave.getRotation());
+		Wall wall = new Wall();
+		wall.setPosition(waveDir.x * 500f, waveDir.y * 500f);
+		stage.addActor(wall);
 	}
 	
 	/**

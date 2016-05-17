@@ -56,6 +56,13 @@ public class AirMolecule extends HitboxActor implements Poolable {
 					MoveToAction moveAction = Actions.moveTo(markedPos.x, markedPos.y, 1f, Interpolation.sineOut);
 					addAction(moveAction);
 				}
+			} else if(actor instanceof Wall) {
+				Wall wall = (Wall)actor;
+				if(Intersector.overlapConvexPolygons(wall.hitbox(), hitbox())) {
+					clearActions();
+					MoveToAction moveAction = Actions.moveTo(markedPos.x, markedPos.y, 1f, Interpolation.sineOut);
+					addAction(moveAction);
+				}
 			}
 		}
 	}
