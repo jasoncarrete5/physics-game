@@ -34,8 +34,7 @@ public class Refractor extends HitboxActor {
 	}
 	
 	/**
-	 * Calculates the angle of refraction of a wave based on its angle
-	 * of incidence with the refractor.
+	 * Calculates the angle of refraction using Snell's Law.
 	 * @param incidence The angle of incidence.
 	 * @return The angle of refraction based on the angle of incidence
 	 * and the refractionIndex.

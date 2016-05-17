@@ -4,9 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.Json.Serializable;
-import com.badlogic.gdx.utils.JsonValue;
 import com.fwumdesoft.phys.Main;
 
 /**
@@ -14,7 +11,7 @@ import com.fwumdesoft.phys.Main;
  * {@link #getRotation()} = 0. If the Wave hits this reflector more than 10 times
  * it is considered a failed run and the level should reset.
  */
-public class Reflector extends HitboxActor implements Serializable {
+public class Reflector extends HitboxActor {
 	private static final TextureRegion texture;
 	
 	static {
@@ -47,28 +44,5 @@ public class Reflector extends HitboxActor implements Serializable {
 	 */
 	public Vector2 getNormal() {
 		return Vector2.X.cpy().rotate(getRotation());
-	}
-	
-	@Override
-	public void write(Json json) {
-		json.writeValue("x", getX());
-		json.writeValue("y", getY());
-		json.writeValue("rotation", getRotation());
-		json.writeValue("originX", getOriginX());
-		json.writeValue("originY", getOriginY());
-		json.writeValue("width", getWidth());
-		json.writeValue("height", getHeight());
-		json.writeValue("scaleX", getScaleX());
-		json.writeValue("scaleY", getScaleY());
-		json.writeValue("fixed", getFixed());
-	}
-	
-	@Override
-	public void read(Json json, JsonValue jsonData) {
-		setBounds(jsonData.getFloat("x"), jsonData.getFloat("y"), jsonData.getFloat("width"), jsonData.getFloat("height"));
-		setOrigin(jsonData.getFloat("originX"), jsonData.getFloat("originY"));
-		setRotation(jsonData.getFloat("rotation"));
-		setScale(jsonData.getFloat("scaleX"), jsonData.getFloat("scaleY"));
-		setFixed(jsonData.getByte("fixed"));
 	}
 }

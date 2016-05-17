@@ -30,7 +30,7 @@ public class GameScreen extends ScreenAdapter {
 		Vector2 v = Vector2.X.cpy().rotate(wave.getRotation());
 		Reflector refl = new Reflector();
 		refl.setPosition(v.x * 500, v.y * 500, Align.center);
-		refl.setSize(2, 50);
+		refl.setSize(5, 50);
 		refl.setRotation(10);
 		stage.addActor(refl);
 	}

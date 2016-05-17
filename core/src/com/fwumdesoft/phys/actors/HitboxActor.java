@@ -2,13 +2,16 @@ package com.fwumdesoft.phys.actors;
 
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Json.Serializable;
+import com.badlogic.gdx.utils.JsonValue;
 import com.fwumdesoft.phys.TransformType;
 
 /**
  * An Actor object that has a rectangular hitbox {@link Polygon} that will match
  * all dimensions of the actor.
  */
-public class HitboxActor extends Actor {
+public class HitboxActor extends Actor implements Serializable {
 	private Polygon hitbox;
 	private byte fixed;
 	
@@ -144,5 +147,28 @@ public class HitboxActor extends Actor {
 	 */
 	public void setFixed(byte fixed) {
 		this.fixed = fixed;
+	}
+	
+	@Override
+	public void write(Json json) {
+		json.writeValue("x", getX());
+		json.writeValue("y", getY());
+		json.writeValue("rotation", getRotation());
+		json.writeValue("originX", getOriginX());
+		json.writeValue("originY", getOriginY());
+		json.writeValue("width", getWidth());
+		json.writeValue("height", getHeight());
+		json.writeValue("scaleX", getScaleX());
+		json.writeValue("scaleY", getScaleY());
+		json.writeValue("fixed", getFixed());
+	}
+
+	@Override
+	public void read(Json json, JsonValue jsonData) {
+		setBounds(jsonData.getFloat("x"), jsonData.getFloat("y"), jsonData.getFloat("width"), jsonData.getFloat("height"));
+		setOrigin(jsonData.getFloat("originX"), jsonData.getFloat("originY"));
+		setRotation(jsonData.getFloat("rotation"));
+		setScale(jsonData.getFloat("scaleX"), jsonData.getFloat("scaleY"));
+		setFixed(jsonData.getByte("fixed"));
 	}
 }
