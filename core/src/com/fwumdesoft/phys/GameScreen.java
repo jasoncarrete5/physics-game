@@ -14,7 +14,9 @@ import com.fwumdesoft.phys.actors.Reflector;
 import com.fwumdesoft.phys.actors.Wave;
 
 public class GameScreen extends ScreenAdapter {
+	private int nextLevel = 0;
 	private Stage stage;
+	private Level level;
 	
 	@Override
 	public void show() {
@@ -26,6 +28,7 @@ public class GameScreen extends ScreenAdapter {
 		Wave wave = new Wave(width, height, speed);
 		stage.addActor(wave);
 		wave.propagate(0, 0, 20);
+		wave.debug();
 		
 		Vector2 v = Vector2.X.cpy().rotate(wave.getRotation());
 		Reflector refl = new Reflector();
@@ -70,6 +73,22 @@ public class GameScreen extends ScreenAdapter {
 		
 		stage.act(delta);
 		stage.draw();
+		
+//		***** check victory conditions *****
+//		int numWaves = level.getTransmitters().size;
+//		for(Actor actor : stage.getActors()) {
+//			if(actor instanceof Wave) {
+//				Wave wave = (Wave)actor;
+//				if(wave.wasSuccessful()) {
+//					numWaves--;
+//				} else if(!wave.isAlive()) {
+//					//TODO reset level since a wave has been lost before hitting a receiver
+//				}
+//			}
+//		}
+//		if(numWaves == 0) {
+//			//TODO go to next level since all waves were successful
+//		}
 	}
 	
 	@Override
