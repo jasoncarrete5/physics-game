@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 
 public class Wave extends HitboxActor {
 	private Vector2 velocity;
+	private boolean alive, success;
 	
 	public Wave() {
 		this(3, 6, 30);
@@ -22,6 +23,8 @@ public class Wave extends HitboxActor {
 		setSize(width, height);
 		setOrigin(Align.center);
 		velocity = Vector2.X.cpy().scl(speed);
+		alive = true;
+		success = false;
 	}
 	
 	/**
@@ -83,6 +86,21 @@ public class Wave extends HitboxActor {
 					});
 					addAction(Actions.sequence(moveOutOfRefractor, propagate));
 				}
+			} else if(actor instanceof Wall) {
+				Wall wall = (Wall)actor;
+				if(wall.hitbox().contains(getX(Align.center), getY(Align.center))) { //the wall should absorb the sound wave
+					clearActions();
+					//mark this wave as killed
+					alive = false;
+				}
+			} else if(actor instanceof Receiver) {
+				Receiver recv = (Receiver)actor;
+				if(recv.hitbox().contains(getX(Align.center), getY(Align.center))) {
+					clearActions();
+					//mark this wave as successful
+					success = true;
+					alive = false;
+				}
 			}
 		}
 	}
@@ -99,6 +117,14 @@ public class Wave extends HitboxActor {
 	
 	public float getSpeed() {
 		return velocity.len();
+	}
+	
+	public boolean isAlive() {
+		return alive;
+	}
+	
+	public boolean wasSuccessful() {
+		return success;
 	}
 	
 	@Override
