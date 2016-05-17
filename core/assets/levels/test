@@ -2,8 +2,8 @@
 name: test
 reflectors: [
 	{
-		x: 139.125
-		y: 339.21875
+		x: 498.5
+		y: 271.25
 		rotation: 0
 		originX: 1.5
 		originY: 10
@@ -14,8 +14,8 @@ reflectors: [
 		fixed: 2
 	}
 	{
-		x: 493.03122
-		y: 272.8125
+		x: 264.125
+		y: 244.6875
 		rotation: 0
 		originX: 1.5
 		originY: 10
@@ -26,8 +26,8 @@ reflectors: [
 		fixed: 3
 	}
 	{
-		x: 588.3437
-		y: 354.84375
+		x: 449.54163
+		y: 413.95834
 		rotation: 0
 		originX: 1.5
 		originY: 10
