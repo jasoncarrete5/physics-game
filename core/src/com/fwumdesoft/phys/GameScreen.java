@@ -1,16 +1,21 @@
 package com.fwumdesoft.phys;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.fwumdesoft.phys.actors.AirMolecule;
-import com.fwumdesoft.phys.actors.Wall;
+import com.fwumdesoft.phys.actors.Transmitter;
 import com.fwumdesoft.phys.actors.Wave;
 
 public class GameScreen extends ScreenAdapter {
@@ -22,18 +27,19 @@ public class GameScreen extends ScreenAdapter {
 	public void show() {
 		stage = new Stage(new FillViewport(1000f, 1000f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
 		Gdx.input.setInputProcessor(stage);
+		stage.addListener(new InputManager());
 		
 		generateAir(0.03f);
-		float width = 2, height = 15, speed = 100;
-		Wave wave = new Wave(width, height, speed);
-		stage.addActor(wave);
-		wave.propagate(0, 0, 20);
-		wave.debug();
+//		loadNextLevel();
+	}
+	
+	private void loadNextLevel() {
+		level = Level.loadFromFile(Integer.toString(++nextLevel));
+		level.setupStage(stage, false);
+	}
+	
+	private void resetLevel() {
 		
-		Vector2 waveDir = Vector2.X.cpy().rotate(wave.getRotation());
-		Wall wall = new Wall();
-		wall.setPosition(waveDir.x * 500f, waveDir.y * 500f);
-		stage.addActor(wall);
 	}
 	
 	/**
@@ -73,20 +79,22 @@ public class GameScreen extends ScreenAdapter {
 		stage.draw();
 		
 //		***** check victory conditions *****
-//		int numWaves = level.getTransmitters().size;
-//		for(Actor actor : stage.getActors()) {
-//			if(actor instanceof Wave) {
-//				Wave wave = (Wave)actor;
-//				if(wave.wasSuccessful()) {
-//					numWaves--;
-//				} else if(!wave.isAlive()) {
-//					//TODO reset level since a wave has been lost before hitting a receiver
-//				}
-//			}
-//		}
-//		if(numWaves == 0) {
-//			//TODO go to next level since all waves were successful
-//		}
+		int numWaves = 1;//level.getTransmitters().size;
+		for(Actor actor : stage.getActors()) {
+			if(actor instanceof Wave) {
+				Wave wave = (Wave)actor;
+				if(wave.wasSuccessful()) {
+					numWaves--;
+				} else if(!wave.isAlive()) {
+					//TODO reset level since a wave has been lost before hitting a receiver
+					Gdx.app.log("GameScreen", "Reset level");
+				}
+			}
+		}
+		if(numWaves == 0) {
+			//TODO go to next level since all waves were successful
+			Gdx.app.log("GameScreen", "Next Level");
+		}
 	}
 	
 	@Override
@@ -97,5 +105,23 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void dispose() {
 		stage.dispose();
+	}
+	
+	private class InputManager extends InputListener {
+		@Override
+		public boolean keyDown(InputEvent event, int keycode) {
+			switch(keycode) {
+			case Keys.SPACE: //tells all transmitters to transmit a wave
+				for(Actor actor : stage.getActors()) {
+					if(actor instanceof Transmitter) {
+						Transmitter trans = (Transmitter)actor;
+						trans.transmit();
+					}
+				}
+				Gdx.app.log("GameScreen.InputManager", "Transmitters fired");
+				return true;
+			}
+			return false;
+		}
 	}
 }

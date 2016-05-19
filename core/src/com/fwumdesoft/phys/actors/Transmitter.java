@@ -1,7 +1,9 @@
 package com.fwumdesoft.phys.actors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.fwumdesoft.phys.Main;
 
@@ -23,5 +25,13 @@ public class Transmitter extends HitboxActor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(texture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+	}
+	
+	public void transmit() {
+		Wave wave = new Wave();
+		getStage().addActor(wave);
+		Vector2 leading = Vector2.X.cpy().rotate(getRotation()).scl(5);
+		wave.propagate(getX(Align.center) + leading.x, getY(Align.center) + leading.y, getRotation());
+		wave.debug();
 	}
 }

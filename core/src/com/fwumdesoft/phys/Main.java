@@ -16,6 +16,7 @@ public class Main extends Game {
 		public static final AssetDescriptor<Texture> REFRACTOR = new AssetDescriptor<>("textures/refractor.png", Texture.class);
 		public static final AssetDescriptor<Texture> WALL = new AssetDescriptor<>("textures/wall.png", Texture.class);
 		public static final AssetDescriptor<Texture> TRANSMITTER = new AssetDescriptor<>("textures/transmitter.png", Texture.class);
+		public static final AssetDescriptor<Texture> RECEIVER = new AssetDescriptor<>("textures/receiver.png", Texture.class);
 	}
 	
 	public static AssetManager asset;
@@ -33,6 +34,7 @@ public class Main extends Game {
 		asset.load(Assets.REFRACTOR);
 		asset.load(Assets.WALL);
 		asset.load(Assets.TRANSMITTER);
+		asset.load(Assets.RECEIVER);
 		asset.finishLoading();
 		
 		setScreen(new MainMenuScreen());

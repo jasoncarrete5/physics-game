@@ -16,7 +16,7 @@ public class Wave extends HitboxActor {
 	private boolean alive, success;
 	
 	public Wave() {
-		this(3, 6, 30);
+		this(2, 15, 70);
 	}
 	
 	public Wave(float width, float height, float speed) {
