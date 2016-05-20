@@ -22,7 +22,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.fwumdesoft.phys.actors.HitboxActor;
+import com.fwumdesoft.phys.actors.Receiver;
 import com.fwumdesoft.phys.actors.Reflector;
+import com.fwumdesoft.phys.actors.Refractor;
+import com.fwumdesoft.phys.actors.Transmitter;
+import com.fwumdesoft.phys.actors.Wall;
 
 /**
  * The level editor screen.
@@ -35,7 +39,6 @@ public class EditorScreen extends ScreenAdapter {
 	public void show() {
 		stage = new Stage(new FillViewport(1000f, 1000f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
 		Gdx.input.setInputProcessor(stage);
-		
 		
 		
 		//set up actor settings window
@@ -100,6 +103,7 @@ public class EditorScreen extends ScreenAdapter {
 		};
 		Window wndActors = new Window("Actors", Main.uiskin);
 		TextButton btnReflector = new TextButton("Reflector", Main.uiskin);
+		//TODO implement a way to rotate the game objects in the editor
 		btnReflector.addListener(new ClickListener(Buttons.LEFT) {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -110,7 +114,59 @@ public class EditorScreen extends ScreenAdapter {
 				level.add(refl);
 			}
 		});
+		TextButton btnRefractor = new TextButton("Refractor", Main.uiskin);
+		btnRefractor.addListener(new ClickListener(Buttons.LEFT) {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Refractor refr = new Refractor();
+				refr.addListener(moveWhenDragged);
+				refr.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
+				stage.addActor(refr);
+				level.add(refr);
+			}
+		});
+		TextButton btnWall = new TextButton("Wall", Main.uiskin);
+		btnWall.addListener(new ClickListener(Buttons.LEFT) {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Wall wall = new Wall();
+				wall.addListener(moveWhenDragged);
+				wall.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
+				stage.addActor(wall);
+				level.add(wall);
+			}
+		});
+		TextButton btnTransmitter = new TextButton("Transmitter", Main.uiskin);
+		btnTransmitter.addListener(new ClickListener(Buttons.LEFT) {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Transmitter trans = new Transmitter();
+				trans.addListener(moveWhenDragged);
+				trans.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
+				stage.addActor(trans);
+				level.add(trans);
+			}
+		});
+		TextButton btnReceiver = new TextButton("Receiver", Main.uiskin);
+		btnReceiver.addListener(new ClickListener(Buttons.LEFT) {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Receiver recv = new Receiver();
+				recv.addListener(moveWhenDragged);
+				recv.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
+				stage.addActor(recv);
+				level.add(recv);
+			}
+		});
 		wndActors.add(btnReflector);
+		wndActors.row().padTop(3);
+		wndActors.add(btnRefractor);
+		wndActors.row().padTop(3);
+		wndActors.add(btnWall);
+		wndActors.row().padTop(3);
+		wndActors.add(btnTransmitter);
+		wndActors.row().padTop(3);
+		wndActors.add(btnReceiver);
 		wndActors.pack();
 		
 		stage.addActor(wndActors);
