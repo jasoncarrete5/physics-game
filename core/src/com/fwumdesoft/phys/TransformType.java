@@ -8,4 +8,5 @@ public class TransformType {
 	public static final byte rotationFixed = 1 << 1;
 	
 	public static final byte fixed = positionFixed | rotationFixed;
+	public static final byte notFixed = ~fixed;
 }
