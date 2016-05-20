@@ -2,6 +2,7 @@ package com.fwumdesoft.phys;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -88,10 +90,14 @@ public class EditorScreen extends ScreenAdapter {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				//update wndActorSettings
-				wndActorSettings.setUserObject(event.getListenerActor()); //set the object to currently selected Actor
-				HitboxActor tActor = (HitboxActor)event.getListenerActor();
-				chkFixedPosition.setChecked((tActor.getFixed() & TransformType.positionFixed) != 0);
-				chkFixedRotation.setChecked((tActor.getFixed() & TransformType.rotationFixed) != 0);
+				Actor actor = event.getListenerActor();
+				if(actor instanceof HitboxActor) {
+					HitboxActor hActor = (HitboxActor)actor;
+					wndActorSettings.setUserObject(hActor); //set the object to currently selected Actor
+					stage.setKeyboardFocus(hActor);
+					chkFixedPosition.setChecked((hActor.getFixed() & TransformType.positionFixed) != 0);
+					chkFixedRotation.setChecked((hActor.getFixed() & TransformType.rotationFixed) != 0);
+				}
 				return super.touchDown(event, x, y, pointer, button);
 			}
 			
@@ -99,6 +105,28 @@ public class EditorScreen extends ScreenAdapter {
 			public void drag(InputEvent event, float x, float y, int pointer) {
 				Action moveAction = Actions.moveToAligned(event.getStageX(), event.getStageY(), Align.center, 0.01f, Interpolation.linear);
 				event.getListenerActor().addAction(moveAction);
+			}
+		};
+		InputListener rotationListener = new InputListener() {
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				switch(keycode) {
+				case Keys.LEFT:
+					Action rotateLeft = Actions.forever(Actions.rotateBy(1));
+					event.getListenerActor().addAction(rotateLeft);
+					return true;
+				case Keys.RIGHT:
+					Action rotateRight = Actions.forever(Actions.rotateBy(-1));
+					event.getListenerActor().addAction(rotateRight);
+					return true;
+				}
+				return false;
+			}
+			
+			@Override
+			public boolean keyUp(InputEvent event, int keycode) {
+				event.getListenerActor().clearActions();
+				return true;
 			}
 		};
 		Window wndActors = new Window("Actors", Main.uiskin);
@@ -109,6 +137,7 @@ public class EditorScreen extends ScreenAdapter {
 			public void clicked(InputEvent event, float x, float y) {
 				Reflector refl = new Reflector();
 				refl.addListener(moveWhenDragged);
+				refl.addListener(rotationListener);
 				refl.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
 				stage.addActor(refl);
 				level.add(refl);
@@ -120,6 +149,7 @@ public class EditorScreen extends ScreenAdapter {
 			public void clicked(InputEvent event, float x, float y) {
 				Refractor refr = new Refractor();
 				refr.addListener(moveWhenDragged);
+				refr.addListener(rotationListener);
 				refr.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
 				stage.addActor(refr);
 				level.add(refr);
@@ -131,6 +161,7 @@ public class EditorScreen extends ScreenAdapter {
 			public void clicked(InputEvent event, float x, float y) {
 				Wall wall = new Wall();
 				wall.addListener(moveWhenDragged);
+				wall.addListener(rotationListener);
 				wall.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
 				stage.addActor(wall);
 				level.add(wall);
@@ -142,6 +173,7 @@ public class EditorScreen extends ScreenAdapter {
 			public void clicked(InputEvent event, float x, float y) {
 				Transmitter trans = new Transmitter();
 				trans.addListener(moveWhenDragged);
+				trans.addListener(rotationListener);
 				trans.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
 				stage.addActor(trans);
 				level.add(trans);
@@ -153,6 +185,7 @@ public class EditorScreen extends ScreenAdapter {
 			public void clicked(InputEvent event, float x, float y) {
 				Receiver recv = new Receiver();
 				recv.addListener(moveWhenDragged);
+				recv.addListener(rotationListener);
 				recv.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
 				stage.addActor(recv);
 				level.add(recv);
@@ -173,7 +206,7 @@ public class EditorScreen extends ScreenAdapter {
 		stage.addActor(wndActorSettings);
 		
 		
-		//ask the user to load a level or create a new level
+//		***** ask the user to load a level or create a new level *****
 		Dialog newLevel = new Dialog("Level Editor", Main.uiskin) {
 			@Override
 			protected void result(Object object) {
@@ -197,6 +230,7 @@ public class EditorScreen extends ScreenAdapter {
 					level.setupStage(stage, true);
 					for(Actor a : stage.getActors()) {
 						a.addListener(moveWhenDragged);
+						a.addListener(rotationListener);
 					}
 				}
 			}

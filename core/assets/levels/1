@@ -58,9 +58,9 @@ receivers: [
 ]
 transmitters: [
 	{
-		x: 830.78125
-		y: 292.5
-		rotation: 0
+		x: 637.81244
+		y: 273.75
+		rotation: -23
 		originX: 20
 		originY: 20
 		width: 40
