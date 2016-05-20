@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.fwumdesoft.phys.Main;
+import com.fwumdesoft.phys.TransformType;
 
 /**
  * Can reflect waves. All reflectors should have more height than width when
@@ -19,7 +20,7 @@ public class Reflector extends HitboxActor {
 	}
 	
 	public Reflector() {
-		this((byte)0);
+		this(TransformType.notFixed);
 	}
 	
 	/**

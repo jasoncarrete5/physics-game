@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.fwumdesoft.phys.Main;
+import com.fwumdesoft.phys.TransformType;
 
 /**
  * This Actor can refract waves.
@@ -19,7 +20,9 @@ public class Refractor extends HitboxActor {
 	
 	private float refractionIndex;
 	
-	public Refractor() {}
+	public Refractor() {
+		this(1, TransformType.notFixed);
+	}
 	
 	public Refractor(float refractionIndex, byte fixedMask) {
 		setSize(3, 20);
