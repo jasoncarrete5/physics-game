@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.fwumdesoft.phys.actors.HitboxActor;
@@ -77,24 +78,28 @@ public class EditorScreen extends ScreenAdapter {
 				}
 			}
 		});
+		TextField txtRefrIndex = new TextField("", Main.uiskin);
+		txtRefrIndex.setMessageText("Refr Index");
+		txtRefrIndex.setDisabled(true);
 		wndActorSettings.add(chkFixedPosition);
 		wndActorSettings.row().padTop(2);
 		wndActorSettings.add(chkFixedRotation);
-		wndActorSettings.row().padTop(5);
+		wndActorSettings.row().padTop(2);
+		wndActorSettings.add(txtRefrIndex);
 		wndActorSettings.pack();
 		wndActorSettings.setPosition(0, stage.getHeight(), Align.topLeft);
 		
 		
-		//set up actor window
+//		***** set up listeners *****
 		DragListener moveWhenDragged = new DragListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				//update wndActorSettings
 				Actor actor = event.getListenerActor();
 				if(actor instanceof HitboxActor) {
 					HitboxActor hActor = (HitboxActor)actor;
-					wndActorSettings.setUserObject(hActor); //set the object to currently selected Actor
 					stage.setKeyboardFocus(hActor);
+					hActor.debug();
+					wndActorSettings.setUserObject(hActor); //set the object to currently selected Actor
 					chkFixedPosition.setChecked((hActor.getFixed() & TransformType.positionFixed) != 0);
 					chkFixedRotation.setChecked((hActor.getFixed() & TransformType.rotationFixed) != 0);
 				}
@@ -105,6 +110,23 @@ public class EditorScreen extends ScreenAdapter {
 			public void drag(InputEvent event, float x, float y, int pointer) {
 				Action moveAction = Actions.moveToAligned(event.getStageX(), event.getStageY(), Align.center, 0.01f, Interpolation.linear);
 				event.getListenerActor().addAction(moveAction);
+			}
+		};
+		FocusListener focusChanged = new FocusListener() {
+			@Override
+			public void keyboardFocusChanged(FocusEvent event, Actor actor, boolean focused) {
+				if(focused) {
+					if(event.getRelatedActor() != null)
+						event.getRelatedActor().setDebug(false);
+					event.getListenerActor().setDebug(true);
+					if(event.getListenerActor() instanceof Refractor) {
+						txtRefrIndex.setDisabled(false);
+					} else {
+						txtRefrIndex.setDisabled(true);
+					}
+				} else {
+					event.getListenerActor().setDebug(false);
+				}
 			}
 		};
 		InputListener rotationListener = new InputListener() {
@@ -129,6 +151,9 @@ public class EditorScreen extends ScreenAdapter {
 				return true;
 			}
 		};
+		
+		
+		//set up actor window
 		Window wndActors = new Window("Actors", Main.uiskin);
 		TextButton btnReflector = new TextButton("Reflector", Main.uiskin);
 		//TODO implement a way to rotate the game objects in the editor
@@ -138,6 +163,7 @@ public class EditorScreen extends ScreenAdapter {
 				Reflector refl = new Reflector();
 				refl.addListener(moveWhenDragged);
 				refl.addListener(rotationListener);
+				refl.addListener(focusChanged);
 				refl.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
 				stage.addActor(refl);
 				level.add(refl);
@@ -150,6 +176,7 @@ public class EditorScreen extends ScreenAdapter {
 				Refractor refr = new Refractor();
 				refr.addListener(moveWhenDragged);
 				refr.addListener(rotationListener);
+				refr.addListener(focusChanged);
 				refr.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
 				stage.addActor(refr);
 				level.add(refr);
@@ -162,6 +189,7 @@ public class EditorScreen extends ScreenAdapter {
 				Wall wall = new Wall();
 				wall.addListener(moveWhenDragged);
 				wall.addListener(rotationListener);
+				wall.addListener(focusChanged);
 				wall.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
 				stage.addActor(wall);
 				level.add(wall);
@@ -174,6 +202,7 @@ public class EditorScreen extends ScreenAdapter {
 				Transmitter trans = new Transmitter();
 				trans.addListener(moveWhenDragged);
 				trans.addListener(rotationListener);
+				trans.addListener(focusChanged);
 				trans.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
 				stage.addActor(trans);
 				level.add(trans);
@@ -186,6 +215,7 @@ public class EditorScreen extends ScreenAdapter {
 				Receiver recv = new Receiver();
 				recv.addListener(moveWhenDragged);
 				recv.addListener(rotationListener);
+				recv.addListener(focusChanged);
 				recv.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
 				stage.addActor(recv);
 				level.add(recv);
@@ -229,8 +259,11 @@ public class EditorScreen extends ScreenAdapter {
 					level = Level.loadFromFile(lvlFile.name());
 					level.setupStage(stage, true);
 					for(Actor a : stage.getActors()) {
-						a.addListener(moveWhenDragged);
-						a.addListener(rotationListener);
+						if(a instanceof HitboxActor) {
+							a.addListener(moveWhenDragged);
+							a.addListener(rotationListener);
+							a.addListener(focusChanged);
+						}
 					}
 				}
 			}

@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.fwumdesoft.phys.Main;
 import com.fwumdesoft.phys.TransformType;
 
@@ -44,10 +46,21 @@ public class Refractor extends HitboxActor {
 	 */
 	public float getRefractionAngle(float incidence) {
 		return MathUtils.radDeg * (float)Math.asin(MathUtils.sinDeg(incidence) / refractionIndex);
-		
 	}
 	
 	public Vector2 getNormal() {
 		return Vector2.X.cpy().rotate(getRotation());
+	}
+	
+	@Override
+	public void read(Json json, JsonValue jsonData) {
+		super.read(json, jsonData);
+		refractionIndex = jsonData.getFloat("index");
+	}
+	
+	@Override
+	public void write(Json json) {
+		super.write(json);
+		json.writeValue("index", refractionIndex);
 	}
 }
