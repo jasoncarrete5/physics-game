@@ -53,7 +53,11 @@ public class Level {
 				stage.addActor(actor);
 			}
 		} else {
-			//TODO only add actors with fixed positions to the stage
+			for(HitboxActor actor : getAllActors()) {
+				if(actor.getFixed() != TransformType.notFixed) { //only add fixed actors to the stage
+					stage.addActor(actor);
+				}
+			}
 		}
 	}
 	
@@ -63,7 +67,20 @@ public class Level {
 	public Array<HitboxActor> getFixedPositionActors() {
 		Array<HitboxActor> fixedActors = new Array<>();
 		for(HitboxActor actor : getAllActors()) {
-			if((actor.getFixed() & TransformType.positionFixed) != 0) {
+			if((actor.getFixed() & TransformType.positionFixed) != TransformType.notFixed) {
+				fixedActors.add(actor);
+			}
+		}
+		return fixedActors;
+	}
+	
+	/**
+	 * @return An Array of all actors that are movable.
+	 */
+	public Array<HitboxActor> getNotFixedPositionActors() {
+		Array<HitboxActor> fixedActors = new Array<>();
+		for(HitboxActor actor : getAllActors()) {
+			if((actor.getFixed() & TransformType.positionFixed) == TransformType.notFixed) {
 				fixedActors.add(actor);
 			}
 		}
