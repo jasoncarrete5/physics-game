@@ -1,8 +1,8 @@
 package com.fwumdesoft.phys;
 
+import java.util.function.Consumer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
@@ -12,15 +12,19 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.fwumdesoft.phys.actors.AirMolecule;
+import com.fwumdesoft.phys.actors.HitboxActor;
+import com.fwumdesoft.phys.actors.Refractor;
 import com.fwumdesoft.phys.actors.Transmitter;
 import com.fwumdesoft.phys.actors.Wave;
 
 public class GameScreen extends ScreenAdapter {
 	private int nextLevel = 0;
 	private Stage stage;
+	private Array<HitboxActor> movableActors;
 	private Level level;
 	
 	@Override
@@ -30,12 +34,35 @@ public class GameScreen extends ScreenAdapter {
 		stage.addListener(new InputManager());
 		
 		generateAir(0.03f);
+		
+		Wave wave = new Wave();
+		wave.debug();
+		stage.addActor(wave);
+		wave.propagate(100, 100, 10);
+		
+//		Vector2 v = Vector2.X.cpy().rotate(10).scl(100);
+//		Reflector refl = new Reflector();
+//		refl.setPosition(v.x + wave.getX(), v.y + wave.getY());
+//		refl.setRotation(30);
+//		stage.addActor(refl);
+		
+		Vector2 v = Vector2.X.cpy().rotate(10).scl(100);
+		Refractor refr = new Refractor();
+		refr.setPosition(v.x + wave.getX(), v.y + wave.getY());
+		refr.setRotation(210);
+		stage.addActor(refr);
+		
 //		loadNextLevel();
 	}
 	
 	private void loadNextLevel() {
 		level = Level.loadFromFile(Integer.toString(++nextLevel));
 		level.setupStage(stage, false);
+		movableActors = level.getNotFixedPositionActors();
+		Consumer<HitboxActor> disable = actor -> actor.setVisible(false);
+		Consumer<HitboxActor> addToStage = actor -> stage.addActor(actor);
+		movableActors.forEach(disable);
+		movableActors.forEach(addToStage);
 	}
 	
 	private void resetLevel() {
@@ -108,16 +135,21 @@ public class GameScreen extends ScreenAdapter {
 	}
 	
 	private class InputManager extends InputListener {
+		private boolean transmitted;
+		
 		@Override
 		public boolean keyDown(InputEvent event, int keycode) {
 			switch(keycode) {
 			case Keys.SPACE: //tells all transmitters to transmit a wave
-				for(Actor actor : stage.getActors()) {
+				if(transmitted) break;
+				for(int i = 0; i < stage.getActors().size; i++) {
+					Actor actor = stage.getActors().get(i);
 					if(actor instanceof Transmitter) {
 						Transmitter trans = (Transmitter)actor;
 						trans.transmit();
 					}
 				}
+				transmitted = true;
 				Gdx.app.log("GameScreen.InputManager", "Transmitters fired");
 				return true;
 			}
