@@ -67,7 +67,7 @@ public class Level {
 	public Array<HitboxActor> getFixedPositionActors() {
 		Array<HitboxActor> fixedActors = new Array<>();
 		for(HitboxActor actor : getAllActors()) {
-			if((actor.getFixed() & TransformType.positionFixed) != TransformType.notFixed) {
+			if((actor.getFixed() & TransformType.positionFixed) == TransformType.positionFixed) {
 				fixedActors.add(actor);
 			}
 		}
@@ -80,7 +80,7 @@ public class Level {
 	public Array<HitboxActor> getNotFixedPositionActors() {
 		Array<HitboxActor> fixedActors = new Array<>();
 		for(HitboxActor actor : getAllActors()) {
-			if((actor.getFixed() & TransformType.positionFixed) == TransformType.notFixed) {
+			if((actor.getFixed() & TransformType.positionFixed) != TransformType.positionFixed) {
 				fixedActors.add(actor);
 			}
 		}
