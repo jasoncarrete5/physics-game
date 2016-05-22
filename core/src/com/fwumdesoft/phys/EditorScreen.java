@@ -156,7 +156,6 @@ public class EditorScreen extends ScreenAdapter {
 		//set up actor window
 		Window wndActors = new Window("Actors", Main.uiskin);
 		TextButton btnReflector = new TextButton("Reflector", Main.uiskin);
-		//TODO implement a way to rotate the game objects in the editor
 		btnReflector.addListener(new ClickListener(Buttons.LEFT) {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
