@@ -2,8 +2,8 @@
 name: 1
 reflectors: [
 	{
-		x: 221.15625
-		y: 195.46875
+		x: 475.84372
+		y: 390.78125
 		rotation: -26
 		originX: 1.5
 		originY: 10
@@ -11,28 +11,29 @@ reflectors: [
 		height: 20
 		scaleX: 1
 		scaleY: 1
-		fixed: -4
+		fixed: -3
 	}
 ]
 refractors: [
 	{
-		x: 340.68747
-		y: 226.71875
-		rotation: 0
+		x: 725.8437
+		y: 388.4375
+		rotation: 10
 		originX: 1.5
 		originY: 10
-		width: 3
-		height: 20
+		width: 5
+		height: 30
 		scaleX: 1
 		scaleY: 1
-		fixed: -2
+		fixed: -3
+		index: 1.33
 	}
 ]
 walls: [
 	{
-		x: 360
-		y: 140.625
-		rotation: -118
+		x: 596.7187
+		y: 314.84375
+		rotation: -180
 		originX: 2.5
 		originY: 25
 		width: 5
@@ -44,30 +45,30 @@ walls: [
 ]
 receivers: [
 	{
-		x: 160.31247
-		y: 134.6875
-		rotation: -45
+		x: 589.2187
+		y: 225.3125
+		rotation: 451
 		originX: 10
 		originY: 20
 		width: 20
 		height: 40
 		scaleX: 1
 		scaleY: 1
-		fixed: 0
+		fixed: 3
 	}
 ]
 transmitters: [
 	{
-		x: 473.74997
-		y: 247.1875
-		rotation: 201
+		x: 776.87494
+		y: 404.21875
+		rotation: 200
 		originX: 20
 		originY: 20
 		width: 40
 		height: 40
 		scaleX: 1
 		scaleY: 1
-		fixed: 0
+		fixed: 3
 	}
 ]
 }
