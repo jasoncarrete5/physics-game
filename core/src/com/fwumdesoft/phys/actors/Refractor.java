@@ -27,7 +27,7 @@ public class Refractor extends HitboxActor {
 	}
 	
 	public Refractor(float refractionIndex, byte fixedMask) {
-		setSize(3, 20);
+		setSize(5, 30);
 		setOrigin(Align.center);
 		setFixed(fixedMask);
 		this.refractionIndex = refractionIndex;
@@ -45,7 +45,7 @@ public class Refractor extends HitboxActor {
 	 * and the refractionIndex.
 	 */
 	public float getRefractionAngle(float incidence) {
-		return MathUtils.radDeg * (float)Math.asin(MathUtils.sinDeg(incidence) / refractionIndex);
+		return (float)Math.toDegrees(Math.asin(MathUtils.sinDeg(incidence) / refractionIndex));
 	}
 	
 	public Vector2 getNormal() {
