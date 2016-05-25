@@ -35,10 +35,10 @@ public class GameScreen extends ScreenAdapter {
 		
 		generateAir(0.03f);
 		
-		Wave wave = new Wave();
-		wave.debug();
-		stage.addActor(wave);
-		wave.propagate(100, 100, 10);
+//		Wave wave = new Wave();
+//		wave.debug();
+//		stage.addActor(wave);
+//		wave.propagate(100, 100, 10);
 		
 //		Vector2 v = Vector2.X.cpy().rotate(10).scl(100);
 //		Reflector refl = new Reflector();
@@ -46,13 +46,13 @@ public class GameScreen extends ScreenAdapter {
 //		refl.setRotation(30);
 //		stage.addActor(refl);
 		
-		Vector2 v = Vector2.X.cpy().rotate(10).scl(100);
-		Refractor refr = new Refractor();
-		refr.setPosition(v.x + wave.getX(), v.y + wave.getY());
-		refr.setRotation(210);
-		stage.addActor(refr);
+//		Vector2 v = Vector2.X.cpy().rotate(10).scl(100);
+//		Refractor refr = new Refractor();
+//		refr.setPosition(v.x + wave.getX(), v.y + wave.getY());
+//		refr.setRotation(210);
+//		stage.addActor(refr);
 		
-//		loadNextLevel();
+		loadNextLevel();
 	}
 	
 	private void loadNextLevel() {
