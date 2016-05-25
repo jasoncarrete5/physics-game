@@ -136,6 +136,14 @@ public class HitboxActor extends Actor implements Serializable {
 	public Polygon hitbox() {
 		return hitbox;
 	}
+	
+	public boolean isMovable() {
+		return (fixed & Fixed.positionFixed) != Fixed.positionFixed;
+	}
+	
+	public boolean isRotatable() {
+		return (fixed & Fixed.rotationFixed) != Fixed.rotationFixed;
+	}
 
 	public byte getFixed() {
 		return fixed;

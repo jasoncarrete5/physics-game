@@ -3,7 +3,6 @@ package com.fwumdesoft.phys;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.fwumdesoft.phys.actors.Fixed;
@@ -41,25 +40,6 @@ public class Level {
 	
 	public String getName() {
 		return name;
-	}
-	
-	/**
-	 * Add all actors in this level to the stage.
-	 * @param stage Stage to add the actors to.
-	 * @param isEditor {@code true} if the stage is the editor stage, otherwise {@code false}.
-	 */
-	public void setupStage(Stage stage, boolean isEditor) {
-		if(isEditor) {
-			for(HitboxActor actor : getAllActors()) {
-				stage.addActor(actor);
-			}
-		} else {
-			for(HitboxActor actor : getAllActors()) {
-				if(actor.getFixed() != Fixed.notFixed) { //only add fixed actors to the stage
-					stage.addActor(actor);
-				}
-			}
-		}
 	}
 	
 	/**

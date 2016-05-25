@@ -260,14 +260,12 @@ public class EditorScreen extends ScreenAdapter {
 					}.text("Failed to load file").button("Ok").show(stage);
 				} else {
 					level = Level.loadFromFile(lvlFile.name());
-					level.setupStage(stage, true);
-					for(Actor a : stage.getActors()) {
-						if(a instanceof HitboxActor) {
-							a.addListener(moveWhenDragged);
-							a.addListener(rotationListener);
-							a.addListener(focusChanged);
-						}
-					}
+					level.getAllActors().forEach(actor -> {
+						stage.addActor(actor);
+						actor.addListener(moveWhenDragged);
+						actor.addListener(rotationListener);
+						actor.addListener(focusChanged);
+					});
 				}
 			}
 		});

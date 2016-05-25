@@ -1,6 +1,5 @@
 package com.fwumdesoft.phys;
 
-import java.util.function.Consumer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
@@ -23,8 +22,8 @@ import com.fwumdesoft.phys.actors.Wave;
 public class GameScreen extends ScreenAdapter {
 	private int curLevel = 0;
 	private Stage stage;
-	private Array<HitboxActor> movableActors;
 	private Level level;
+	private Array<HitboxActor> movableActors = new Array<>();
 	
 	/** {@code true} if transmitters have already been fired on this level.
 	 * Gets reset by a call to resetLevel(). */
@@ -45,19 +44,22 @@ public class GameScreen extends ScreenAdapter {
 	}
 	
 	private void resetLevel() {
-		Consumer<Actor> remove = actor -> actor.remove();
-		stage.getActors().forEach(remove);
+		//reset instance vars
+		stage.getActors().forEach(actor -> actor.remove());
 		transmitted = false;
+		movableActors.clear();
+		level = Level.loadFromFile(Integer.toString(curLevel));
 		
 		generateAir(0.03f);
-		level = Level.loadFromFile(Integer.toString(curLevel));
-		level.setupStage(stage, false);
-		movableActors = level.getNotFixedPositionActors();
-		Consumer<HitboxActor> addInvisible = actor -> {
-			actor.setVisible(false);
+		level.getAllActors().forEach(actor -> {
 			stage.addActor(actor);
-		};
-		movableActors.forEach(addInvisible);
+			if(actor.isMovable()) {
+				actor.setVisible(false);
+				movableActors.add(actor);
+			}
+		});
+		Gdx.app.debug("GameScreen", "All Actors: " + stage.getActors());
+		Gdx.app.debug("GameScreen", "Movable Actors: " + movableActors);
 	}
 	
 	/**
@@ -105,11 +107,13 @@ public class GameScreen extends ScreenAdapter {
 					numWaves--;
 				} else if(!wave.isAlive()) {
 					resetLevel();
+					Gdx.app.log("GameScreen", "Reset current level");
 				}
 			}
 		}
 		if(numWaves == 0) {
 			loadNextLevel();
+			Gdx.app.log("GameScreen", "Loaded next level");
 		}
 	}
 	
