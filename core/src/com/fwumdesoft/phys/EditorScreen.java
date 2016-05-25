@@ -68,14 +68,11 @@ public class EditorScreen extends ScreenAdapter {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				CheckBox chkBox = (CheckBox)event.getListenerActor();
-				Actor a = (Actor)event.getListenerActor().getParent().getUserObject();
-				if(a instanceof HitboxActor) {
-					HitboxActor tActor = (HitboxActor)a;
-					if(chkBox.isChecked()) {
-						tActor.setFixed((byte)(tActor.getFixed() | Fixed.rotationFixed));
-					} else {
-						tActor.setFixed((byte)(tActor.getFixed() & ~Fixed.rotationFixed));
-					}
+				HitboxActor hActor = (HitboxActor)wndActorSettings.getUserObject();
+				if(chkBox.isChecked()) {
+					hActor.setFixed((byte)(hActor.getFixed() | Fixed.rotationFixed));
+				} else {
+					hActor.setFixed((byte)(hActor.getFixed() & ~Fixed.rotationFixed));
 				}
 			}
 		});
@@ -103,6 +100,12 @@ public class EditorScreen extends ScreenAdapter {
 					wndActorSettings.setUserObject(hActor); //set the object to currently selected Actor
 					chkFixedPosition.setChecked((hActor.getFixed() & Fixed.positionFixed) != 0);
 					chkFixedRotation.setChecked((hActor.getFixed() & Fixed.rotationFixed) != 0);
+					if(hActor instanceof Refractor) {
+						Refractor refr = (Refractor)hActor;
+						txtRefrIndex.setText(refr.getRefractionIndex() + "");
+					} else {
+						txtRefrIndex.setText("");
+					}
 				}
 				return super.touchDown(event, x, y, pointer, button);
 			}

@@ -51,6 +51,10 @@ public class Refractor extends HitboxActor {
 		return Vector2.X.cpy().rotate(getRotation());
 	}
 	
+	public float getRefractionIndex() {
+		return refractionIndex;
+	}
+	
 	@Override
 	public void read(Json json, JsonValue jsonData) {
 		super.read(json, jsonData);
