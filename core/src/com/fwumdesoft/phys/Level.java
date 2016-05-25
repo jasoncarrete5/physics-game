@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.fwumdesoft.phys.actors.Fixed;
 import com.fwumdesoft.phys.actors.HitboxActor;
 import com.fwumdesoft.phys.actors.Receiver;
 import com.fwumdesoft.phys.actors.Reflector;
@@ -54,7 +55,7 @@ public class Level {
 			}
 		} else {
 			for(HitboxActor actor : getAllActors()) {
-				if(actor.getFixed() != TransformType.notFixed) { //only add fixed actors to the stage
+				if(actor.getFixed() != Fixed.notFixed) { //only add fixed actors to the stage
 					stage.addActor(actor);
 				}
 			}
@@ -67,7 +68,7 @@ public class Level {
 	public Array<HitboxActor> getFixedPositionActors() {
 		Array<HitboxActor> fixedActors = new Array<>();
 		for(HitboxActor actor : getAllActors()) {
-			if((actor.getFixed() & TransformType.positionFixed) == TransformType.positionFixed) {
+			if((actor.getFixed() & Fixed.positionFixed) == Fixed.positionFixed) {
 				fixedActors.add(actor);
 			}
 		}
@@ -80,7 +81,7 @@ public class Level {
 	public Array<HitboxActor> getNotFixedPositionActors() {
 		Array<HitboxActor> fixedActors = new Array<>();
 		for(HitboxActor actor : getAllActors()) {
-			if((actor.getFixed() & TransformType.positionFixed) != TransformType.positionFixed) {
+			if((actor.getFixed() & Fixed.positionFixed) != Fixed.positionFixed) {
 				fixedActors.add(actor);
 			}
 		}

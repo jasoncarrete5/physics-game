@@ -97,21 +97,19 @@ public class GameScreen extends ScreenAdapter {
 		stage.draw();
 		
 //		***** check victory conditions *****
-		int numWaves = 1;//level.getTransmitters().size;
+		int numWaves = level.getTransmitters().size;
 		for(Actor actor : stage.getActors()) {
 			if(actor instanceof Wave) {
 				Wave wave = (Wave)actor;
 				if(wave.wasSuccessful()) {
 					numWaves--;
 				} else if(!wave.isAlive()) {
-					//TODO reset level since a wave has been lost before hitting a receiver
-					Gdx.app.log("GameScreen", "Reset level");
+					resetLevel();
 				}
 			}
 		}
 		if(numWaves == 0) {
-			//TODO go to next level since all waves were successful
-			Gdx.app.log("GameScreen", "Next Level");
+			loadNextLevel();
 		}
 	}
 	

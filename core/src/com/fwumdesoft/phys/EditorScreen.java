@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.fwumdesoft.phys.actors.Fixed;
 import com.fwumdesoft.phys.actors.HitboxActor;
 import com.fwumdesoft.phys.actors.Receiver;
 import com.fwumdesoft.phys.actors.Reflector;
@@ -55,9 +56,9 @@ public class EditorScreen extends ScreenAdapter {
 				if(a instanceof HitboxActor) {
 					HitboxActor tActor = (HitboxActor)a;
 					if(chkBox.isChecked()) {
-						tActor.setFixed((byte)(tActor.getFixed() | TransformType.positionFixed));
+						tActor.setFixed((byte)(tActor.getFixed() | Fixed.positionFixed));
 					} else {
-						tActor.setFixed((byte)(tActor.getFixed() & ~TransformType.positionFixed));
+						tActor.setFixed((byte)(tActor.getFixed() & ~Fixed.positionFixed));
 					}
 				}
 			}
@@ -71,9 +72,9 @@ public class EditorScreen extends ScreenAdapter {
 				if(a instanceof HitboxActor) {
 					HitboxActor tActor = (HitboxActor)a;
 					if(chkBox.isChecked()) {
-						tActor.setFixed((byte)(tActor.getFixed() | TransformType.rotationFixed));
+						tActor.setFixed((byte)(tActor.getFixed() | Fixed.rotationFixed));
 					} else {
-						tActor.setFixed((byte)(tActor.getFixed() & ~TransformType.rotationFixed));
+						tActor.setFixed((byte)(tActor.getFixed() & ~Fixed.rotationFixed));
 					}
 				}
 			}
@@ -100,8 +101,8 @@ public class EditorScreen extends ScreenAdapter {
 					stage.setKeyboardFocus(hActor);
 					hActor.debug();
 					wndActorSettings.setUserObject(hActor); //set the object to currently selected Actor
-					chkFixedPosition.setChecked((hActor.getFixed() & TransformType.positionFixed) != 0);
-					chkFixedRotation.setChecked((hActor.getFixed() & TransformType.rotationFixed) != 0);
+					chkFixedPosition.setChecked((hActor.getFixed() & Fixed.positionFixed) != 0);
+					chkFixedRotation.setChecked((hActor.getFixed() & Fixed.rotationFixed) != 0);
 				}
 				return super.touchDown(event, x, y, pointer, button);
 			}

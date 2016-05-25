@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.fwumdesoft.phys.Main;
-import com.fwumdesoft.phys.TransformType;
 
 /**
  * This Actor can refract waves.
@@ -23,7 +22,7 @@ public class Refractor extends HitboxActor {
 	private float refractionIndex;
 	
 	public Refractor() {
-		this(1, TransformType.notFixed);
+		this(1, Fixed.notFixed);
 	}
 	
 	public Refractor(float refractionIndex, byte fixedMask) {

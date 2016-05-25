@@ -45,5 +45,6 @@ public class Main extends Game {
 		super.dispose();
 		uiskin.dispose();
 		asset.dispose();
+		Gdx.app.log("Main", "Game Disposed");
 	}
 }

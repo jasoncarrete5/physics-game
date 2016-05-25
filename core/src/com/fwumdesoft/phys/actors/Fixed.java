@@ -1,9 +1,9 @@
-package com.fwumdesoft.phys;
+package com.fwumdesoft.phys.actors;
 
 /**
  * Encapsulates bit masks for determining if a reflector/refractor is fixed.
  */
-public class TransformType {
+public class Fixed {
 	public static final byte positionFixed = 1 << 0;
 	public static final byte rotationFixed = 1 << 1;
 	

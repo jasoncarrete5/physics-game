@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Json.Serializable;
 import com.badlogic.gdx.utils.JsonValue;
-import com.fwumdesoft.phys.TransformType;
 
 /**
  * An Actor object that has a rectangular hitbox {@link Polygon} that will match
@@ -143,7 +142,7 @@ public class HitboxActor extends Actor implements Serializable {
 	}
 	
 	/**
-	 * @param fixed A constant from {@link TransformType}.
+	 * @param fixed A constant from {@link Fixed}.
 	 */
 	public void setFixed(byte fixed) {
 		this.fixed = fixed;
