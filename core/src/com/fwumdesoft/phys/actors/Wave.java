@@ -77,10 +77,7 @@ public class Wave extends HitboxActor {
 					clearActions();
 					Vector2 normal = refr.getNormal().rotate(180);
 					float incidence = velocity.angle(normal);
-					Gdx.app.debug("Wave", incidence + "");
 					float refractionAngle = refr.getRefractionAngle(incidence);
-					Gdx.app.debug("Wave", refractionAngle + "");
-					Gdx.app.debug("Wave", refractionAngle + normal.angle() + "");
 					Vector2 moveBy = new Vector2(refr.getWidth() + 1, 0).rotate(refr.getRotation() + 180);
 					Action propagate = Actions
 							.run(() -> propagate(getX(Align.center) + moveBy.x, getY(Align.center) + moveBy.y, normal.angle() + refractionAngle));
