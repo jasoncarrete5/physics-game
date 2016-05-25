@@ -17,15 +17,18 @@ import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.fwumdesoft.phys.actors.AirMolecule;
 import com.fwumdesoft.phys.actors.HitboxActor;
-import com.fwumdesoft.phys.actors.Refractor;
 import com.fwumdesoft.phys.actors.Transmitter;
 import com.fwumdesoft.phys.actors.Wave;
 
 public class GameScreen extends ScreenAdapter {
-	private int nextLevel = 0;
+	private int curLevel = 0;
 	private Stage stage;
 	private Array<HitboxActor> movableActors;
 	private Level level;
+	
+	/** {@code true} if transmitters have already been fired on this level.
+	 * Gets reset by a call to resetLevel(). */
+	private boolean transmitted;
 	
 	@Override
 	public void show() {
@@ -33,40 +36,28 @@ public class GameScreen extends ScreenAdapter {
 		Gdx.input.setInputProcessor(stage);
 		stage.addListener(new InputManager());
 		
-		generateAir(0.03f);
-		
-//		Wave wave = new Wave();
-//		wave.debug();
-//		stage.addActor(wave);
-//		wave.propagate(100, 100, 10);
-		
-//		Vector2 v = Vector2.X.cpy().rotate(10).scl(100);
-//		Reflector refl = new Reflector();
-//		refl.setPosition(v.x + wave.getX(), v.y + wave.getY());
-//		refl.setRotation(30);
-//		stage.addActor(refl);
-		
-//		Vector2 v = Vector2.X.cpy().rotate(10).scl(100);
-//		Refractor refr = new Refractor();
-//		refr.setPosition(v.x + wave.getX(), v.y + wave.getY());
-//		refr.setRotation(210);
-//		stage.addActor(refr);
-		
 		loadNextLevel();
 	}
 	
 	private void loadNextLevel() {
-		level = Level.loadFromFile(Integer.toString(++nextLevel));
-		level.setupStage(stage, false);
-		movableActors = level.getNotFixedPositionActors();
-		Consumer<HitboxActor> disable = actor -> actor.setVisible(false);
-		Consumer<HitboxActor> addToStage = actor -> stage.addActor(actor);
-		movableActors.forEach(disable);
-		movableActors.forEach(addToStage);
+		curLevel++;
+		resetLevel();
 	}
 	
 	private void resetLevel() {
+		Consumer<Actor> remove = actor -> actor.remove();
+		stage.getActors().forEach(remove);
+		transmitted = false;
 		
+		generateAir(0.03f);
+		level = Level.loadFromFile(Integer.toString(curLevel));
+		level.setupStage(stage, false);
+		movableActors = level.getNotFixedPositionActors();
+		Consumer<HitboxActor> addInvisible = actor -> {
+			actor.setVisible(false);
+			stage.addActor(actor);
+		};
+		movableActors.forEach(addInvisible);
 	}
 	
 	/**
@@ -135,13 +126,11 @@ public class GameScreen extends ScreenAdapter {
 	}
 	
 	private class InputManager extends InputListener {
-		private boolean transmitted;
-		
 		@Override
 		public boolean keyDown(InputEvent event, int keycode) {
 			switch(keycode) {
 			case Keys.SPACE: //tells all transmitters to transmit a wave
-				if(transmitted) break;
+				if(transmitted) break; //only allow transmitters to be transmitted once per level
 				for(int i = 0; i < stage.getActors().size; i++) {
 					Actor actor = stage.getActors().get(i);
 					if(actor instanceof Transmitter) {

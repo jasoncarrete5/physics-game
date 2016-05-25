@@ -55,7 +55,8 @@ public class Wave extends HitboxActor {
 			if(actor instanceof AirMolecule) { //tell air particles in hitbox to move
 				AirMolecule air = (AirMolecule)actor;
 				if(Intersector.overlapConvexPolygons(hitbox(), air.hitbox())) {
-					if(air.hasActions()) continue; //TODO Implement a way for waves to interfere
+					if(air.hasActions())
+						continue; //TODO Implement a way for waves to interfere
 					Action moveForward = Actions.moveBy(velocity.x, velocity.y, 1f, Interpolation.linear);
 					Action moveBackward = Actions.moveBy(-velocity.x, -velocity.y, 1f, Interpolation.sine);
 					air.addAction(Actions.sequence(moveForward, moveBackward));
@@ -71,15 +72,18 @@ public class Wave extends HitboxActor {
 					addAction(Actions.sequence(moveBack, propagate));
 				}
 			} else if(actor instanceof Refractor) {
-				Refractor refr =  (Refractor)actor;
+				Refractor refr = (Refractor)actor;
 				if(refr.hitbox().contains(getX(Align.center), getY(Align.center))) { //Refract through the refractor
-					//TODO fix refraction. refr propagate position is off
 					clearActions();
 					Vector2 normal = refr.getNormal().rotate(180);
-					Gdx.app.debug("Wave", this.toString());
-					float refractionAngle = -refr.getRefractionAngle(velocity.angle(normal));
-					Vector2 moveBy = new Vector2(refr.getWidth() + 1, 0).rotate(refr.getRotation());
-					Action propagate = Actions.run(() -> propagate(getX(Align.center) + moveBy.x, getY(Align.center) + moveBy.y, normal.angle() + refractionAngle));
+					float incidence = velocity.angle(normal);
+					Gdx.app.debug("Wave", incidence + "");
+					float refractionAngle = refr.getRefractionAngle(incidence);
+					Gdx.app.debug("Wave", refractionAngle + "");
+					Gdx.app.debug("Wave", refractionAngle + normal.angle() + "");
+					Vector2 moveBy = new Vector2(refr.getWidth() + 1, 0).rotate(refr.getRotation() + 180);
+					Action propagate = Actions
+							.run(() -> propagate(getX(Align.center) + moveBy.x, getY(Align.center) + moveBy.y, normal.angle() + refractionAngle));
 					addAction(propagate);
 				}
 			} else if(actor instanceof Wall) {
