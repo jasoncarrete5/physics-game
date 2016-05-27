@@ -88,6 +88,7 @@ public class Wave extends HitboxActor {
 				if(wall.hitbox().contains(getX(Align.center), getY(Align.center))) { //the wall should absorb the sound wave
 					clearActions();
 					//mark this wave as killed
+					success = false;
 					alive = false;
 				}
 			} else if(actor instanceof Receiver) {

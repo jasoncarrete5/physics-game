@@ -33,7 +33,6 @@ public class GameScreen extends ScreenAdapter {
 	public void show() {
 		stage = new Stage(new FillViewport(1000f, 1000f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
 		Gdx.input.setInputProcessor(stage);
-		stage.addListener(new InputManager());
 		
 		loadNextLevel();
 	}
@@ -45,7 +44,8 @@ public class GameScreen extends ScreenAdapter {
 	
 	private void resetLevel() {
 		//reset instance vars
-		stage.getActors().forEach(actor -> actor.remove());
+		stage.clear();
+		stage.addListener(new InputManager());
 		transmitted = false;
 		movableActors.clear();
 		level = Level.loadFromFile(Integer.toString(curLevel));
@@ -58,7 +58,6 @@ public class GameScreen extends ScreenAdapter {
 				movableActors.add(actor);
 			}
 		});
-		Gdx.app.debug("GameScreen", "All Actors: " + stage.getActors());
 		Gdx.app.debug("GameScreen", "Movable Actors: " + movableActors);
 	}
 	
@@ -100,18 +99,23 @@ public class GameScreen extends ScreenAdapter {
 		
 //		***** check victory conditions *****
 		int numWaves = level.getTransmitters().size;
+		boolean reset = false;
 		for(Actor actor : stage.getActors()) {
 			if(actor instanceof Wave) {
+				Gdx.app.debug("GameScreen", "HERE");
 				Wave wave = (Wave)actor;
 				if(wave.wasSuccessful()) {
 					numWaves--;
 				} else if(!wave.isAlive()) {
-					resetLevel();
-					Gdx.app.log("GameScreen", "Reset current level");
+					reset = true;
+					break;
 				}
 			}
 		}
-		if(numWaves == 0) {
+		if(reset) {
+			resetLevel();
+			Gdx.app.log("GameScreen", "Reset current level");
+		} else if(numWaves == 0) {
 			loadNextLevel();
 			Gdx.app.log("GameScreen", "Loaded next level");
 		}

@@ -1,3 +1,60 @@
 {
 name: 2
+refractors: [
+	{
+		x: 149.0625
+		y: 257.65625
+		rotation: 0
+		originX: 2.5
+		originY: 15
+		width: 5
+		height: 30
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+		index: 1
+	}
+]
+walls: [
+	{
+		x: 377.18747
+		y: 391.40625
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+	}
+]
+receivers: [
+	{
+		x: 473.59372
+		y: 460.46875
+		rotation: 0
+		originX: 10
+		originY: 20
+		width: 20
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+	}
+]
+transmitters: [
+	{
+		x: 480
+		y: 261.25
+		rotation: 0
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+	}
+]
 }
