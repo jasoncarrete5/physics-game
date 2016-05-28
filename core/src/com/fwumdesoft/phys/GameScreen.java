@@ -1,6 +1,7 @@
 package com.fwumdesoft.phys;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,6 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
@@ -50,6 +55,7 @@ public class GameScreen extends ScreenAdapter {
 		movableActors.clear();
 		level = Level.loadFromFile(Integer.toString(curLevel));
 		
+		//setup level with static objects and air
 		generateAir(0.03f);
 		level.getAllActors().forEach(actor -> {
 			stage.addActor(actor);
@@ -59,6 +65,30 @@ public class GameScreen extends ScreenAdapter {
 			}
 		});
 		Gdx.app.debug("GameScreen", "Movable Actors: " + movableActors);
+		
+		//setup ui windows
+		Window wndActors = new Window("Objects", Main.uiskin);
+		//Assume that the only movable actors will be reflectors and refractors
+		//Also assume that they can be rotated
+		Label lblReflectors = new Label(Integer.toString(level.getReflectors().size), Main.uiskin);
+		Label lblRefractors = new Label(Integer.toString(level.getRefractors().size), Main.uiskin);
+		TextButton btnCreateReflector = new TextButton("Create", Main.uiskin);
+		btnCreateReflector.addListener(new ClickListener(Buttons.LEFT) {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				//TODO create a reflector
+			}
+		});
+		TextButton btnCreateRefractor = new TextButton("Create", Main.uiskin);
+		btnCreateRefractor.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				//TODO create a refractor
+			}
+		}); 
+		wndActors.pack();
+		wndActors.setPosition(0, stage.getHeight(), Align.topLeft);
+		stage.addActor(wndActors);
 	}
 	
 	/**
@@ -102,7 +132,6 @@ public class GameScreen extends ScreenAdapter {
 		boolean reset = false;
 		for(Actor actor : stage.getActors()) {
 			if(actor instanceof Wave) {
-				Gdx.app.debug("GameScreen", "HERE");
 				Wave wave = (Wave)actor;
 				if(wave.wasSuccessful()) {
 					numWaves--;
@@ -146,6 +175,16 @@ public class GameScreen extends ScreenAdapter {
 				}
 				transmitted = true;
 				Gdx.app.log("GameScreen.InputManager", "Transmitters fired");
+				return true;
+			case Keys.FORWARD_DEL:
+			case Keys.DEL:
+				Actor focusActor = stage.getKeyboardFocus();
+				if(focusActor instanceof HitboxActor) {
+					HitboxActor hActor = (HitboxActor)focusActor;
+					if(hActor.isMovable()) {
+						//TODO add actor back to list of actors that can be added
+					}
+				}
 				return true;
 			}
 			return false;
