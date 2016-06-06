@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.fwumdesoft.phys.actors.AirMolecule;
 import com.fwumdesoft.phys.actors.HitboxActor;
 import com.fwumdesoft.phys.actors.Transmitter;
@@ -28,6 +28,7 @@ public class GameScreen extends ScreenAdapter {
 	private int curLevel = 0;
 	private Stage stage;
 	private Level level;
+	private float airDensity = 0.03f;
 	private Array<HitboxActor> movableActors = new Array<>();
 	
 	/** {@code true} if transmitters have already been fired on this level.
@@ -36,7 +37,7 @@ public class GameScreen extends ScreenAdapter {
 	
 	@Override
 	public void show() {
-		stage = new Stage(new FillViewport(1000f, 1000f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
+		stage = new Stage(new ExtendViewport(1000f, 1000f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
 		Gdx.input.setInputProcessor(stage);
 		
 		loadNextLevel();
@@ -56,7 +57,7 @@ public class GameScreen extends ScreenAdapter {
 		level = Level.loadFromFile(Integer.toString(curLevel));
 		
 		//setup level with static objects and air
-		generateAir(0.03f);
+		generateAir(airDensity);
 		level.getAllActors().forEach(actor -> {
 			stage.addActor(actor);
 			if(actor.isMovable()) {
@@ -117,6 +118,15 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
+		//regenerate air
+		Array<Actor> remove = new Array<>();
+		stage.getActors().forEach(actor -> {
+			if(actor instanceof AirMolecule) {
+				remove.add(actor);
+			}
+		});
+		remove.forEach(actor -> actor.remove());
+		generateAir(airDensity);
 	}
 	
 	@Override
