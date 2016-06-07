@@ -5,26 +5,22 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
-import com.badlogic.gdx.scenes.scene2d.utils.FocusListener.FocusEvent;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.fwumdesoft.phys.actors.AirMolecule;
-import com.fwumdesoft.phys.actors.HitboxActor;
-import com.fwumdesoft.phys.actors.Reflector;
-import com.fwumdesoft.phys.actors.Refractor;
 import com.fwumdesoft.phys.actors.Transmitter;
 import com.fwumdesoft.phys.actors.Wave;
 
@@ -33,7 +29,8 @@ public class GameScreen extends ScreenAdapter {
 	private Stage stage;
 	private Level level;
 	private float airDensity = 0.03f;
-	private int movableReflectors, movableRefractors;
+	private Toolbox tools;
+	private Window wndObserver, wndToolbox;
 	
 	/** {@code true} if transmitters have already been fired on this level.
 	 * Gets reset by a call to resetLevel(). */
@@ -57,57 +54,86 @@ public class GameScreen extends ScreenAdapter {
 		stage.clear();
 		stage.addListener(new InputManager());
 		transmitted = false;
-		movableReflectors = movableRefractors = 0;
 		level = Level.loadFromFile(Integer.toString(curLevel));
 		
 		//TODO allow the user to select and rotate actors that are rotatable but not movable
 		//setup level with static objects and air
 		generateAir(airDensity);
-		level.getAllActors().forEach(actor -> {
-			if(actor.isMovable() && actor.isRotatable()) {
-				if(actor instanceof Reflector)
-					movableReflectors++;
-				else if(actor instanceof Refractor)
-					movableRefractors++;
-			} else {
-				stage.addActor(actor);
-			}
-		});
-		
-		
-		//setup ui windows
-		Window wndActors = new Window("Objects", Main.uiskin);
-		//Assume that the only movable actors will be reflectors and refractors
-		//Also assume that they can be rotated
-		Label lblReflectors = new Label(Integer.toString(movableReflectors), Main.uiskin);
-		Label lblRefractors = new Label(Integer.toString(movableRefractors), Main.uiskin);
-		TextButton btnCreateReflector = new TextButton("Create Reflector", Main.uiskin);
-		btnCreateReflector.addListener(new ClickListener(Buttons.LEFT) {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				//assume all reflectors can be rotated and moved in here
-				int reflectorsLeft = Integer.parseInt(lblReflectors.getText().toString());
-				if(reflectorsLeft > 0) {
-					reflectorsLeft--;
-					Reflector refl = new Reflector();
-					//TODO add reflector listeners
-					refl.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
-					stage.addActor(refl);
+		level.getAllActors().forEach(actor -> { //add appropriate listeners to actors
+			//adding generic listeners
+			actor.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					if(button == Buttons.LEFT) {
+						stage.setKeyboardFocus(event.getListenerActor());
+						wndObserver.clearChildren();
+						wndObserver.add(new Label(event.getListenerActor().toString(), Main.uiskin)).center();
+						wndObserver.pack();
+						event.stop();
+						return true;
+					}
+					return false;
 				}
-				lblReflectors.setText(Integer.toString(reflectorsLeft));
+			});
+			actor.addListener(new FocusListener() {
+				@Override
+				public void keyboardFocusChanged(FocusEvent event, Actor actor, boolean focused) {
+					if(!focused) {
+						event.getListenerActor().setDebug(false);
+					} else {
+						event.getListenerActor().setDebug(true);
+					}
+				}
+			});
+			if(actor.isMovable()) { //add specific listeners if the actor is movable
+				actor.addListener(new DragListener() {
+					@Override
+					public void drag(InputEvent event, float x, float y, int pointer) {
+						event.getListenerActor().addAction(Actions.moveTo(event.getStageX(), event.getStageY(), 0.1f, Interpolation.linear));
+					}
+				});
+			} else {
+				stage.addActor(actor); //only add actors to the stage if they aren't movable
+			}
+			if(actor.isRotatable()) { //add specific listeners if the actor is rotatable
+				actor.addListener(new InputListener() {
+					@Override
+					public boolean keyDown(InputEvent event, int keycode) {
+						Actor actor = event.getListenerActor();
+						if(keycode == Keys.LEFT) {
+							actor.addAction(Actions.forever(Actions.rotateBy(1f)));
+							return true;
+						} else if(keycode == Keys.RIGHT) {
+							actor.addAction(Actions.forever(Actions.rotateBy(-1f)));
+							return true;
+						}
+						return false;
+					}
+
+					@Override
+					public boolean keyUp(InputEvent event, int keycode) {
+						if(actor.hasActions()) {
+							actor.clearActions();
+							return true;
+						}
+						return false;
+					}
+				});
 			}
 		});
-		TextButton btnCreateRefractor = new TextButton("Create", Main.uiskin);
-		btnCreateRefractor.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				//TODO create a refractor
-			}
-		});
-		wndActors.add(btnCreateReflector);
-		wndActors.pack();
-		wndActors.setPosition(0, stage.getHeight(), Align.topLeft);
-		stage.addActor(wndActors);
+		tools = new Toolbox(level.getNotFixedPositionActors());
+		Gdx.app.debug("GameScreen", tools.toString());
+		
+		//reset windows
+		wndObserver = new Window("Observer", Main.uiskin);
+		wndObserver.setVisible(false);
+		stage.addActor(wndObserver);
+		
+		wndToolbox = new Window("Toolbox", Main.uiskin);
+		wndToolbox.setVisible(false);
+		wndToolbox.add(tools.getAsList()).minWidth(200).minHeight(200).pad(20f);
+		wndToolbox.pack();
+		stage.addActor(wndToolbox);
 	}
 	
 	/**
@@ -191,6 +217,16 @@ public class GameScreen extends ScreenAdapter {
 	
 	private class InputManager extends InputListener {
 		@Override
+		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			if(stage.getKeyboardFocus() != null) {
+				stage.setKeyboardFocus(null);
+				wndObserver.clearChildren();
+				return true;
+			}
+			return false;
+		}
+		
+		@Override
 		public boolean keyDown(InputEvent event, int keycode) {
 			switch(keycode)
 			{
@@ -205,6 +241,12 @@ public class GameScreen extends ScreenAdapter {
 				}
 				transmitted = true;
 				Gdx.app.log("GameScreen.InputManager", "Transmitters fired");
+				return true;
+			case Keys.T: //toggle the toolbox window
+				wndToolbox.setVisible(!wndToolbox.isVisible());
+				return true;
+			case Keys.O: //toggle the observer window
+				wndObserver.setVisible(!wndObserver.isVisible());
 				return true;
 			}
 			return false;

@@ -39,9 +39,9 @@ public class Transmitter extends HitboxActor {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Transmitter: {");
-		sb.append(" Position: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
-		sb.append(" Rotation: " + MathUtils.round(getRotation() % 360));
-		sb.append(" }");
+		sb.append("\nPosition: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
+		sb.append("\nRotation: " + MathUtils.round(getRotation() % 360));
+		sb.append("\n}");
 		return sb.toString();
 	}
 }

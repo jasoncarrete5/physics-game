@@ -71,10 +71,10 @@ public class Refractor extends HitboxActor {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Refractor: {");
-		sb.append(" Position: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
-		sb.append(" Rotation: " + MathUtils.round(getRotation() % 360));
-		sb.append(" Refraction Index: " + refractionIndex);
-		sb.append(" }");
+		sb.append("\nPosition: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
+		sb.append("\nRotation: " + MathUtils.round(getRotation() % 360));
+		sb.append("\nRefraction Index: " + refractionIndex);
+		sb.append("\n}");
 		return sb.toString();
 	}
 }
