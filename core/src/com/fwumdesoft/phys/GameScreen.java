@@ -15,12 +15,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
+import com.badlogic.gdx.scenes.scene2d.utils.FocusListener.FocusEvent;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.fwumdesoft.phys.actors.AirMolecule;
 import com.fwumdesoft.phys.actors.HitboxActor;
+import com.fwumdesoft.phys.actors.Reflector;
+import com.fwumdesoft.phys.actors.Refractor;
 import com.fwumdesoft.phys.actors.Transmitter;
 import com.fwumdesoft.phys.actors.Wave;
 
@@ -29,7 +33,7 @@ public class GameScreen extends ScreenAdapter {
 	private Stage stage;
 	private Level level;
 	private float airDensity = 0.03f;
-	private Array<HitboxActor> movableActors = new Array<>();
+	private int movableReflectors, movableRefractors;
 	
 	/** {@code true} if transmitters have already been fired on this level.
 	 * Gets reset by a call to resetLevel(). */
@@ -53,31 +57,44 @@ public class GameScreen extends ScreenAdapter {
 		stage.clear();
 		stage.addListener(new InputManager());
 		transmitted = false;
-		movableActors.clear();
+		movableReflectors = movableRefractors = 0;
 		level = Level.loadFromFile(Integer.toString(curLevel));
 		
+		//TODO allow the user to select and rotate actors that are rotatable but not movable
 		//setup level with static objects and air
 		generateAir(airDensity);
 		level.getAllActors().forEach(actor -> {
-			stage.addActor(actor);
-			if(actor.isMovable()) {
-				actor.setVisible(false);
-				movableActors.add(actor);
+			if(actor.isMovable() && actor.isRotatable()) {
+				if(actor instanceof Reflector)
+					movableReflectors++;
+				else if(actor instanceof Refractor)
+					movableRefractors++;
+			} else {
+				stage.addActor(actor);
 			}
 		});
-		Gdx.app.debug("GameScreen", "Movable Actors: " + movableActors);
+		
 		
 		//setup ui windows
 		Window wndActors = new Window("Objects", Main.uiskin);
 		//Assume that the only movable actors will be reflectors and refractors
 		//Also assume that they can be rotated
-		Label lblReflectors = new Label(Integer.toString(level.getReflectors().size), Main.uiskin);
-		Label lblRefractors = new Label(Integer.toString(level.getRefractors().size), Main.uiskin);
-		TextButton btnCreateReflector = new TextButton("Create", Main.uiskin);
+		Label lblReflectors = new Label(Integer.toString(movableReflectors), Main.uiskin);
+		Label lblRefractors = new Label(Integer.toString(movableRefractors), Main.uiskin);
+		TextButton btnCreateReflector = new TextButton("Create Reflector", Main.uiskin);
 		btnCreateReflector.addListener(new ClickListener(Buttons.LEFT) {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//TODO create a reflector
+				//assume all reflectors can be rotated and moved in here
+				int reflectorsLeft = Integer.parseInt(lblReflectors.getText().toString());
+				if(reflectorsLeft > 0) {
+					reflectorsLeft--;
+					Reflector refl = new Reflector();
+					//TODO add reflector listeners
+					refl.setPosition(stage.getWidth() / 2, stage.getHeight() / 2, Align.center);
+					stage.addActor(refl);
+				}
+				lblReflectors.setText(Integer.toString(reflectorsLeft));
 			}
 		});
 		TextButton btnCreateRefractor = new TextButton("Create", Main.uiskin);
@@ -86,7 +103,8 @@ public class GameScreen extends ScreenAdapter {
 			public void clicked(InputEvent event, float x, float y) {
 				//TODO create a refractor
 			}
-		}); 
+		});
+		wndActors.add(btnCreateReflector);
 		wndActors.pack();
 		wndActors.setPosition(0, stage.getHeight(), Align.topLeft);
 		stage.addActor(wndActors);
@@ -110,6 +128,7 @@ public class GameScreen extends ScreenAdapter {
 				AirMolecule airMolecule = Pools.get(AirMolecule.class, totalAir).obtain();
 				airMolecule.setPosition(randX, randY, Align.center);
 				airMolecule.markPosition(new Vector2(airMolecule.getX(), airMolecule.getY())); //marks original position
+				airMolecule.toBack();
 				stage.addActor(airMolecule);
 			}
 		}
@@ -118,15 +137,15 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
-		//regenerate air
-		Array<Actor> remove = new Array<>();
-		stage.getActors().forEach(actor -> {
-			if(actor instanceof AirMolecule) {
-				remove.add(actor);
-			}
-		});
-		remove.forEach(actor -> actor.remove());
-		generateAir(airDensity);
+		//regenerate air (maybe)
+//		Array<Actor> remove = new Array<>();
+//		stage.getActors().forEach(actor -> {
+//			if(actor instanceof AirMolecule) {
+//				remove.add(actor);
+//			}
+//		});
+//		remove.forEach(actor -> actor.remove());
+//		generateAir(airDensity);
 	}
 	
 	@Override
@@ -173,7 +192,8 @@ public class GameScreen extends ScreenAdapter {
 	private class InputManager extends InputListener {
 		@Override
 		public boolean keyDown(InputEvent event, int keycode) {
-			switch(keycode) {
+			switch(keycode)
+			{
 			case Keys.SPACE: //tells all transmitters to transmit a wave
 				if(transmitted) break; //only allow transmitters to be transmitted once per level
 				for(int i = 0; i < stage.getActors().size; i++) {
@@ -185,16 +205,6 @@ public class GameScreen extends ScreenAdapter {
 				}
 				transmitted = true;
 				Gdx.app.log("GameScreen.InputManager", "Transmitters fired");
-				return true;
-			case Keys.FORWARD_DEL:
-			case Keys.DEL:
-				Actor focusActor = stage.getKeyboardFocus();
-				if(focusActor instanceof HitboxActor) {
-					HitboxActor hActor = (HitboxActor)focusActor;
-					if(hActor.isMovable()) {
-						//TODO add actor back to list of actors that can be added
-					}
-				}
 				return true;
 			}
 			return false;

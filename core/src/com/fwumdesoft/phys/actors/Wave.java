@@ -56,7 +56,7 @@ public class Wave extends HitboxActor {
 				AirMolecule air = (AirMolecule)actor;
 				if(Intersector.overlapConvexPolygons(hitbox(), air.hitbox())) {
 					if(air.hasActions())
-						continue; //TODO Implement a way for waves to interfere
+						continue;
 					Action moveForward = Actions.moveBy(velocity.x, velocity.y, 1f, Interpolation.linear);
 					Action moveBackward = Actions.moveBy(-velocity.x, -velocity.y, 1f, Interpolation.sine);
 					air.addAction(Actions.sequence(moveForward, moveBackward));
