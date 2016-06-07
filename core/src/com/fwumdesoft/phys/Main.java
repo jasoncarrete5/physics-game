@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -17,6 +18,7 @@ public class Main extends Game {
 		public static final AssetDescriptor<Texture> WALL = new AssetDescriptor<>("textures/wall.png", Texture.class);
 		public static final AssetDescriptor<Texture> TRANSMITTER = new AssetDescriptor<>("textures/transmitter.png", Texture.class);
 		public static final AssetDescriptor<Texture> RECEIVER = new AssetDescriptor<>("textures/receiver.png", Texture.class);
+		public static final AssetDescriptor<Music> MUSIC = new AssetDescriptor<>("sounds/jazz.mp3", Music.class);
 	}
 	
 	public static AssetManager asset;
@@ -35,7 +37,11 @@ public class Main extends Game {
 		asset.load(Assets.WALL);
 		asset.load(Assets.TRANSMITTER);
 		asset.load(Assets.RECEIVER);
+		asset.load(Assets.MUSIC);
 		asset.finishLoading();
+		
+		asset.get(Assets.MUSIC).setLooping(true);
+		asset.get(Assets.MUSIC).play();
 		
 		setScreen(new MainMenuScreen());
 	}
