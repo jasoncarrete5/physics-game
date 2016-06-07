@@ -2,6 +2,7 @@ package com.fwumdesoft.phys.actors;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.fwumdesoft.phys.Main;
@@ -32,5 +33,15 @@ public class Transmitter extends HitboxActor {
 		Vector2 leading = Vector2.X.cpy().rotate(getRotation()).scl(5);
 		wave.propagate(getX(Align.center) + leading.x, getY(Align.center) + leading.y, getRotation());
 		wave.debug();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Transmitter: {");
+		sb.append(" Position: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
+		sb.append(" Rotation: " + MathUtils.round(getRotation() % 360));
+		sb.append(" }");
+		return sb.toString();
 	}
 }

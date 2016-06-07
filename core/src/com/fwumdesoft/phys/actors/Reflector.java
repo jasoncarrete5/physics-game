@@ -2,6 +2,7 @@ package com.fwumdesoft.phys.actors;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.fwumdesoft.phys.Main;
@@ -44,5 +45,15 @@ public class Reflector extends HitboxActor {
 	 */
 	public Vector2 getNormal() {
 		return Vector2.X.cpy().rotate(getRotation());
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Reflector: {");
+		sb.append(" Position: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
+		sb.append(" Rotation: " + MathUtils.round(getRotation() % 360));
+		sb.append(" }");
+		return sb.toString();
 	}
 }

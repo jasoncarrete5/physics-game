@@ -66,4 +66,15 @@ public class Refractor extends HitboxActor {
 		super.write(json);
 		json.writeValue("index", refractionIndex);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Refractor: {");
+		sb.append(" Position: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
+		sb.append(" Rotation: " + MathUtils.round(getRotation() % 360));
+		sb.append(" Refraction Index: " + refractionIndex);
+		sb.append(" }");
+		return sb.toString();
+	}
 }
