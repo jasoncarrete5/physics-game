@@ -11,7 +11,7 @@ reflectors: [
 		height: 20
 		scaleX: 1
 		scaleY: 1
-		fixed: -3
+		fixed: -4
 	}
 ]
 refractors: [
