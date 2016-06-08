@@ -19,7 +19,7 @@ import com.fwumdesoft.phys.actors.Wall;
  */
 public class Level {
 	/** The name of the level file. */
-	private String name;
+	private String name, hint;
 	private Array<Reflector> reflectors;
 	private Array<Refractor> refractors;
 	private Array<Wall> walls;
@@ -32,6 +32,10 @@ public class Level {
 		walls = new Array<>();
 		receivers = new Array<>();
 		transmitters = new Array<>();
+	}
+
+	public String getHint() {
+		return hint;
 	}
 	
 	public void setName(String name) {
@@ -129,6 +133,26 @@ public class Level {
 	
 	public Array<Transmitter> getTransmitters() {
 		return transmitters;
+	}
+	
+	public void removeReflector(Reflector a) {
+		reflectors.removeValue(a, true);
+	}
+	
+	public void removeRefractor(Refractor a) {
+		refractors.removeValue(a, true);
+	}
+	
+	public void removeWall(Wall a) {
+		walls.removeValue(a, true);
+	}
+	
+	public void removeReceiver(Receiver a) {
+		receivers.removeValue(a, true);
+	}
+	
+	public void removeTransmitter(Transmitter a) {
+		transmitters.removeValue(a, true);
 	}
 	
 	/**

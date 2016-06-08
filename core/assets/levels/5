@@ -1,0 +1,72 @@
+{
+name: 5
+hint: Walls are good at stopping propagation
+reflectors: [
+	{
+		x: 583.65625
+		y: 230.78125
+		rotation: -45
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -1
+	}
+	{
+		x: 428.18747
+		y: 230
+		rotation: 45
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -1
+	}
+]
+walls: [
+	{
+		x: 502.18747
+		y: 386.71875
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+receivers: [
+	{
+		x: 424.37497
+		y: 393.28125
+		rotation: -45
+		originX: 10
+		originY: 20
+		width: 20
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+	}
+]
+transmitters: [
+	{
+		x: 565.93744
+		y: 394.84375
+		rotation: 180
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+	}
+]
+}

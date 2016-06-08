@@ -156,6 +156,13 @@ public class HitboxActor extends Actor implements Serializable {
 		this.fixed = fixed;
 	}
 	
+	/**
+	 * @return The string that the observer window uses to display information.
+	 */
+	public String observerString() {
+		return toString();
+	}
+	
 	@Override
 	public void write(Json json) {
 		json.writeValue("x", getX());

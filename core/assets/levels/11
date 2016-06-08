@@ -1,0 +1,144 @@
+{
+name: 11
+hint: "If you can beat this, then you deserve to win"
+reflectors: [
+	{
+		x: 489.12497
+		y: 337.03125
+		rotation: 90
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -3
+	}
+	{
+		x: 609.43744
+		y: 443.28125
+		rotation: 0
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -3
+	}
+	{
+		x: 368.03122
+		y: 441.71875
+		rotation: 0
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -3
+	}
+	{
+		x: 487.56247
+		y: 501.875
+		rotation: 90
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -4
+	}
+]
+walls: [
+	{
+		x: 490.46872
+		y: 353.90625
+		rotation: 90
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 527.96875
+		y: 379.6875
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+	}
+	{
+		x: 451.40622
+		y: 380.46875
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+	}
+	{
+		x: 489.68747
+		y: 421.875
+		rotation: 90
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+receivers: [
+	{
+		x: 481.40622
+		y: 376.875
+		rotation: 90
+		originX: 10
+		originY: 20
+		width: 20
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+transmitters: [
+	{
+		x: 304.21875
+		y: 169.84375
+		rotation: 45
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 632.3437
+		y: 169.84375
+		rotation: 135
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+}

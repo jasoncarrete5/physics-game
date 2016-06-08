@@ -1,0 +1,144 @@
+{
+name: 14
+hint: Stop and think
+reflectors: [
+	{
+		x: 572.7187
+		y: 217.5
+		rotation: 92
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -4
+	}
+]
+walls: [
+	{
+		x: 365.46872
+		y: 289.84375
+		rotation: -180
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 505.31247
+		y: 288.28125
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 485.78122
+		y: 338.28125
+		rotation: 45
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 386.56247
+		y: 339.0625
+		rotation: -45
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 484.99997
+		y: 236.71875
+		rotation: -45
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+	}
+	{
+		x: 385.78125
+		y: 239.84375
+		rotation: 45
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 434.99997
+		y: 217.96875
+		rotation: 90
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 436.56247
+		y: 357.8125
+		rotation: 90
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+receivers: [
+	{
+		x: 707.1875
+		y: 331.5625
+		rotation: -135
+		originX: 10
+		originY: 20
+		width: 20
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+transmitters: [
+	{
+		x: 419.06247
+		y: 292.5
+		rotation: 0
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+	}
+]
+}

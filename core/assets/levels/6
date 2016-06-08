@@ -1,0 +1,84 @@
+{
+name: 6
+hint: ""
+reflectors: [
+	{
+		x: 425.84372
+		y: 336.25
+		rotation: 0
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -3
+	}
+	{
+		x: 553.9687
+		y: 234.6875
+		rotation: 0
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -3
+	}
+]
+walls: [
+	{
+		x: 425.62497
+		y: 259.375
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 552.18744
+		y: 293.75
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+receivers: [
+	{
+		x: 292.34375
+		y: 280.78125
+		rotation: 0
+		originX: 10
+		originY: 20
+		width: 20
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+transmitters: [
+	{
+		x: 647.9687
+		y: 283.90625
+		rotation: 180
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 1
+	}
+]
+}

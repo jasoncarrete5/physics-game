@@ -1,0 +1,96 @@
+{
+name: 9
+hint: I wonder where your tools went...
+reflectors: [
+	{
+		x: 600.8437
+		y: 261.25
+		rotation: 0
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -4
+	}
+	{
+		x: 364.90625
+		y: 261.25
+		rotation: 0
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -4
+	}
+]
+walls: [
+	{
+		x: 467.03122
+		y: 254.6875
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 483.43747
+		y: 214.84375
+		rotation: -136
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 482.65622
+		y: 295.3125
+		rotation: -44
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+receivers: [
+	{
+		x: 479.06247
+		y: 260.46875
+		rotation: 0
+		originX: 10
+		originY: 20
+		width: 20
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+transmitters: [
+	{
+		x: 419.06247
+		y: 258.90625
+		rotation: -180
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+}

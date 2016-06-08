@@ -43,6 +43,34 @@ public class EditorScreen extends ScreenAdapter {
 	public void show() {
 		stage = new Stage(new FillViewport(1000f, 1000f * ((float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth())));
 		Gdx.input.setInputProcessor(stage);
+		stage.addListener(new InputListener() {
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if(keycode == Keys.DEL || keycode == Keys.FORWARD_DEL) {
+					if(stage.getKeyboardFocus() != null) {
+						if(stage.getKeyboardFocus() instanceof Reflector) {
+							level.removeReflector((Reflector)stage.getKeyboardFocus());
+							stage.getKeyboardFocus().remove();
+						} else if(stage.getKeyboardFocus() instanceof Refractor) {
+							level.removeRefractor((Refractor)stage.getKeyboardFocus());
+							stage.getKeyboardFocus().remove();
+						} else if(stage.getKeyboardFocus() instanceof Wall) {
+							level.removeWall((Wall)stage.getKeyboardFocus());
+							stage.getKeyboardFocus().remove();
+						} else if(stage.getKeyboardFocus() instanceof Transmitter) {
+							level.removeTransmitter((Transmitter)stage.getKeyboardFocus());
+							stage.getKeyboardFocus().remove();
+						} else if(stage.getKeyboardFocus() instanceof Receiver) {
+							level.removeReceiver((Receiver)stage.getKeyboardFocus());
+							stage.getKeyboardFocus().remove();
+						}
+						level.writeLevel();
+						return true;
+					}
+				}
+				return false;
+			}
+		});
 		
 		
 		//set up actor settings window
@@ -137,10 +165,12 @@ public class EditorScreen extends ScreenAdapter {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
 				switch(keycode) {
+				case Keys.A:
 				case Keys.LEFT:
 					Action rotateLeft = Actions.forever(Actions.rotateBy(1));
 					event.getListenerActor().addAction(rotateLeft);
 					return true;
+				case Keys.D:
 				case Keys.RIGHT:
 					Action rotateRight = Actions.forever(Actions.rotateBy(-1));
 					event.getListenerActor().addAction(rotateRight);

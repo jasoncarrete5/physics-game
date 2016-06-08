@@ -32,16 +32,27 @@ public class Transmitter extends HitboxActor {
 		getStage().addActor(wave);
 		Vector2 leading = Vector2.X.cpy().rotate(getRotation()).scl(5);
 		wave.propagate(getX(Align.center) + leading.x, getY(Align.center) + leading.y, getRotation());
-		wave.debug();
+	}
+	
+	@Override
+	public String observerString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Transmitter: {");
+		sb.append("\nPosition: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
+		sb.append("\nRotation: " + MathUtils.round(getRotation() % 360));
+		sb.append("\nRotatable: " + isRotatable());
+		sb.append("\nMovable: " + isMovable());
+		sb.append("\n}");
+		return sb.toString();
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Transmitter: {");
-		sb.append("\nPosition: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
-		sb.append("\nRotation: " + MathUtils.round(getRotation() % 360));
-		sb.append("\n}");
+		sb.append("Transmitter: { ");
+		sb.append(" Position: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
+		sb.append(" Rotation: " + MathUtils.round(getRotation() % 360));
+		sb.append(" }");
 		return sb.toString();
 	}
 }

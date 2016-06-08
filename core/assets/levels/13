@@ -1,32 +1,32 @@
 {
-name: 1
-hint: "To shoot, press space"
+name: 13
+hint: "That was good but who cares, this next one is impossible"
 receivers: [
 	{
-		x: 158.74997
+		x: 576.7187
 		y: 267.50003
-		rotation: 360
+		rotation: 0
 		originX: 10
 		originY: 20
 		width: 20
 		height: 40
 		scaleX: 1
 		scaleY: 1
-		fixed: 3
+		fixed: 0
 	}
 ]
 transmitters: [
 	{
-		x: 828.43744
-		y: 264.375
-		rotation: 180
+		x: 415.93747
+		y: 263.59375
+		rotation: 0
 		originX: 20
 		originY: 20
 		width: 40
 		height: 40
 		scaleX: 1
 		scaleY: 1
-		fixed: 3
+		fixed: 0
 	}
 ]
 }

@@ -1,0 +1,46 @@
+{
+name: 3
+hint: Reflectors can reflect waves...
+reflectors: [
+	{
+		x: 505.53122
+		y: 387.03125
+		rotation: -90
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -1
+	}
+]
+receivers: [
+	{
+		x: 278.28125
+		y: 261.25
+		rotation: 39
+		originX: 10
+		originY: 20
+		width: 20
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+transmitters: [
+	{
+		x: 720.625
+		y: 269.0625
+		rotation: -206
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+}

@@ -1,0 +1,144 @@
+{
+name: 7
+hint: All waves need a home
+reflectors: [
+	{
+		x: 583.65625
+		y: 408.125
+		rotation: 90
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -3
+	}
+	{
+		x: 418.81247
+		y: 409.6875
+		rotation: -90
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -3
+	}
+	{
+		x: 584.43744
+		y: 121.40625
+		rotation: 90
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -3
+	}
+]
+walls: [
+	{
+		x: 499.84375
+		y: 220.3125
+		rotation: -180
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 499.84375
+		y: 269.53125
+		rotation: 180
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 499.84375
+		y: 318.75
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 499.84375
+		y: 352.34375
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 499.84375
+		y: 171.09375
+		rotation: 0
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+receivers: [
+	{
+		x: 399.375
+		y: 120.625
+		rotation: 49
+		originX: 10
+		originY: 20
+		width: 20
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+transmitters: [
+	{
+		x: 566.7187
+		y: 214.375
+		rotation: 90
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 396.40622
+		y: 212.03125
+		rotation: 90
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+}

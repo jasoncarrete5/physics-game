@@ -1,0 +1,47 @@
+{
+name: 4
+hint: Refraction is cool too
+refractors: [
+	{
+		x: 487.34372
+		y: 292.03125
+		rotation: 0
+		originX: 2.5
+		originY: 15
+		width: 5
+		height: 30
+		scaleX: 1
+		scaleY: 1
+		fixed: -3
+		index: 1
+	}
+]
+receivers: [
+	{
+		x: 175.15625
+		y: 284.6875
+		rotation: 0
+		originX: 10
+		originY: 20
+		width: 20
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+transmitters: [
+	{
+		x: 515.1562
+		y: 327.65625
+		rotation: -130
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+}

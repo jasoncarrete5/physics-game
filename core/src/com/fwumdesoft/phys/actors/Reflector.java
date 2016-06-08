@@ -29,7 +29,7 @@ public class Reflector extends HitboxActor {
 	 * to determine what kind of modifications the user can make to this Reflector.
 	 */
 	public Reflector(byte fixedType) {
-		setSize(3, 20);
+		setSize(3, 40);
 		setOrigin(Align.center);
 		setFixed(fixedType);
 	}
@@ -46,14 +46,25 @@ public class Reflector extends HitboxActor {
 	public Vector2 getNormal() {
 		return Vector2.X.cpy().rotate(getRotation());
 	}
-	
 	@Override
-	public String toString() {
+	public String observerString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Reflector: {");
 		sb.append("\nPosition: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
 		sb.append("\nRotation: " + MathUtils.round(getRotation() % 360));
+		sb.append("\nRotatable: " + isRotatable());
+		sb.append("\nMovable: " + isMovable());
 		sb.append("\n}");
+		return sb.toString();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Reflector: { ");
+		sb.append(" Position: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
+		sb.append(" Rotation: " + MathUtils.round(getRotation() % 360));
+		sb.append(" }");
 		return sb.toString();
 	}
 }

@@ -20,6 +20,10 @@ public class Toolbox {
 		tools.put(actor, true);
 	}
 	
+	public void takeTool(HitboxActor actor) {
+		tools.put(actor, false);
+	}
+	
 	public ObjectMap<HitboxActor, Boolean> getTools() {
 		return tools;
 	}

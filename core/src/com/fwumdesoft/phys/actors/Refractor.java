@@ -55,6 +55,10 @@ public class Refractor extends HitboxActor {
 		return refractionIndex;
 	}
 	
+	public void setRefractionIndex(float refractionIndex) {
+		this.refractionIndex = refractionIndex;
+	}
+	
 	@Override
 	public void read(Json json, JsonValue jsonData) {
 		super.read(json, jsonData);
@@ -68,13 +72,26 @@ public class Refractor extends HitboxActor {
 	}
 	
 	@Override
-	public String toString() {
+	public String observerString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Refractor: {");
 		sb.append("\nPosition: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
 		sb.append("\nRotation: " + MathUtils.round(getRotation() % 360));
 		sb.append("\nRefraction Index: " + refractionIndex);
+		sb.append("\nRotatable: " + isRotatable());
+		sb.append("\nMovable: " + isMovable());
 		sb.append("\n}");
+		return sb.toString();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Refractor: { ");
+		sb.append(" Position: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
+		sb.append(" Rotation: " + MathUtils.round(getRotation() % 360));
+		sb.append(" Refraction Index: " + refractionIndex);
+		sb.append(" }");
 		return sb.toString();
 	}
 }

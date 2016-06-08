@@ -1,0 +1,96 @@
+{
+name: 8
+hint: If only you could keep rotating
+reflectors: [
+	{
+		x: 259.4375
+		y: 282.34375
+		rotation: 45
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -3
+	}
+	{
+		x: 455.53122
+		y: 291.71875
+		rotation: 0
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -1
+	}
+	{
+		x: 242.25
+		y: 218.28125
+		rotation: 45
+		originX: 1.5
+		originY: 20
+		width: 3
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: -1
+	}
+]
+walls: [
+	{
+		x: 313.125
+		y: 266.40625
+		rotation: 90
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+	{
+		x: 313.90625
+		y: 305.46875
+		rotation: 90
+		originX: 2.5
+		originY: 25
+		width: 5
+		height: 50
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+receivers: [
+	{
+		x: 368.125
+		y: 231.5625
+		rotation: 180
+		originX: 10
+		originY: 20
+		width: 20
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+transmitters: [
+	{
+		x: 243.28125
+		y: 351.875
+		rotation: -90
+		originX: 20
+		originY: 20
+		width: 40
+		height: 40
+		scaleX: 1
+		scaleY: 1
+		fixed: 3
+	}
+]
+}

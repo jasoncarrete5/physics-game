@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.utils.Align;
+import com.fwumdesoft.phys.Main;
+import com.fwumdesoft.phys.Main.Assets;
 
 public class Wave extends HitboxActor {
 	private Vector2 velocity;
@@ -51,6 +53,13 @@ public class Wave extends HitboxActor {
 	protected void positionChanged() {
 		super.positionChanged();
 		
+		//wave is out of bounds
+		if(getX(Align.left) > getStage().getWidth() || getX(Align.right) < 0 || getY(Align.bottom) > getStage().getHeight() || getY(Align.top) < 0) {
+			alive = false;
+			success = false;
+			clearActions();
+		}
+		
 		for(Actor actor : getStage().getActors()) {
 			if(actor instanceof AirMolecule) { //tell air particles in hitbox to move
 				AirMolecule air = (AirMolecule)actor;
@@ -64,6 +73,7 @@ public class Wave extends HitboxActor {
 			} else if(actor instanceof Reflector) {
 				Reflector refl = (Reflector)actor;
 				if(refl.hitbox().contains(getX(Align.center), getY(Align.center))) { //reflect off reflector with proper angle of reflection
+					Main.asset.get(Assets.COLLISION_SOUND).play();
 					clearActions();
 					Vector2 normal = refl.getNormal();
 					float incidence = velocity.angle(normal);
@@ -74,6 +84,7 @@ public class Wave extends HitboxActor {
 			} else if(actor instanceof Refractor) {
 				Refractor refr = (Refractor)actor;
 				if(refr.hitbox().contains(getX(Align.center), getY(Align.center))) { //Refract through the refractor
+					Main.asset.get(Assets.COLLISION_SOUND).play();
 					clearActions();
 					Vector2 normal = refr.getNormal().rotate(180);
 					float incidence = velocity.angle(normal);

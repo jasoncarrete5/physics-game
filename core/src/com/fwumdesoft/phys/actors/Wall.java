@@ -27,12 +27,24 @@ public class Wall extends HitboxActor {
 	}
 	
 	@Override
-	public String toString() {
+	public String observerString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Wall: {");
 		sb.append("\nPosition: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
 		sb.append("\nRotation: " + MathUtils.round(getRotation() % 360));
+		sb.append("\nRotatable: " + isRotatable());
+		sb.append("\nMovable: " + isMovable());
 		sb.append("\n}");
+		return sb.toString();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Wall: { ");
+		sb.append(" Position: (" + MathUtils.round(getX()) + ", " + MathUtils.round(getY()) + ")");
+		sb.append(" Rotation: " + MathUtils.round(getRotation() % 360));
+		sb.append(" }");
 		return sb.toString();
 	}
 }
