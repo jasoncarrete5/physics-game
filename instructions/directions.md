@@ -1,5 +1,5 @@
 # Wavefront -- *by Jason Carrete*
-Wavefront is a single-player puzzle game that requires the player to get past a series of puzzles in order to be victorious.
+Wavefront is a single-player puzzle game that requires the player to get passed a series of puzzles in order to be victorious.
 Play time ranges from 10-30 minutes depending on how quickly you can solve each puzzle. Each puzzle requires knowledge of reflection and refraction of waves.
 
 ### Understanding the tools
